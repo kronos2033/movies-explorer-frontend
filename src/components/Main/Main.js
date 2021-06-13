@@ -3,6 +3,7 @@ import Promo from '../Promo/Promo';
 import Navbar from '../Navbar/Navbar';
 import AboutProject from '../AboutProject/AboutProject';
 import Technologies from '../Technologies/Technologies';
+import AboutMe from '../AboutMe/AboutMe';
 import './Main.css';
 
 function Main(props) {
@@ -13,6 +14,7 @@ function Main(props) {
       <Navbar/>
       <AboutProject/>
       <Technologies/>
+      <AboutMe/>
     </div>
   );
 }
