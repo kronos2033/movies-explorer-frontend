@@ -2,6 +2,7 @@ import Header from '../Header/Header';
 import Promo from '../Promo/Promo';
 import Navbar from '../Navbar/Navbar';
 import AboutProject from '../AboutProject/AboutProject';
+import Technologies from '../Technologies/Technologies';
 import './Main.css';
 
 function Main(props) {
@@ -11,6 +12,7 @@ function Main(props) {
       <Promo />
       <Navbar/>
       <AboutProject/>
+      <Technologies/>
     </div>
   );
 }
