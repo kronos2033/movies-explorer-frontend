@@ -9,9 +9,11 @@ import Footer from '../Footer/Footer';
 import './Main.css';
 
 function Main(props) {
+
+  const isMain = false
   return (
     <section className = 'main'>
-      <Header backgroundColor = {'#F3C1F8'}/>
+      <Header backgroundColor = {'#F3C1F8'} isMain = {isMain}/>
       <Promo />
       <Navbar/>
       <AboutProject/>
