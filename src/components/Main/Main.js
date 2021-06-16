@@ -4,18 +4,22 @@ import Navbar from '../Navbar/Navbar';
 import AboutProject from '../AboutProject/AboutProject';
 import Technologies from '../Technologies/Technologies';
 import AboutMe from '../AboutMe/AboutMe';
+import Portfolio from '../Portfolio/ Portfolio';
+import Footer from '../Footer/Footer';
 import './Main.css';
 
 function Main(props) {
   return (
-    <div className = 'main'>
+    <section className = 'main'>
       <Header backgroundColor = {'#F3C1F8'}/>
       <Promo />
       <Navbar/>
       <AboutProject/>
       <Technologies/>
       <AboutMe/>
-    </div>
+      <Portfolio/>
+      <Footer/>
+    </section>
   );
 }
 

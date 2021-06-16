@@ -2,7 +2,7 @@ import './AboutProject.css';
 
 function AboutProject() { 
     return (
-        <div className='about'>
+        <section className='about section_type_narrow'>
             <h2 className="about__title">О проекте</h2>
             <div className ='about__diplom-container'>
                 <article className = 'about__diplom'>
@@ -24,7 +24,7 @@ function AboutProject() {
             <span className='about__techno'>Back-end</span>
             <span className='about__techno'>Front-end</span>
             </div>
-        </div>
+        </section>
     );
 }
 

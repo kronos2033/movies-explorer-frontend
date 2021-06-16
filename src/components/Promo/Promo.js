@@ -1,9 +1,9 @@
 import './Promo.css';
 function Promo(props) {
   return (
-    <div className='promo'> 
+    <section className='promo'> 
       <h1 className='promo__header'>Учебный проект студента факультета Веб-разработки.</h1>
-    </div>
+    </section>
   );
 }
 
