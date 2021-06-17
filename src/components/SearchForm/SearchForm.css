@@ -1,0 +1,35 @@
+.search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search__form {
+    position: relative;
+}
+
+.search__input {
+    width: 932px;
+    border: 1px solid #AAA;
+    border-radius: 50px;
+    padding: 15px 0;
+}
+
+.search__input::placeholder {
+    color: #A0A0A0;
+    padding-left: 22px;
+}
+
+.search__button {
+    position: absolute;
+    right: 0;
+    background: url(../../images/search.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #000;
+    width: 80px;
+    height: 34px;
+    border:none;
+    border-radius: 48px;
+    margin: 8px;
+}

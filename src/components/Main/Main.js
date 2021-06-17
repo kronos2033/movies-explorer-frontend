@@ -10,9 +10,9 @@ import './Main.css';
 
 function Main(props) {
 
-  const isMain = false
+  const isMain = true
   return (
-    <section className = 'main'>
+    <section className = 'section main'>
       <Header backgroundColor = {'#F3C1F8'} isMain = {isMain}/>
       <Promo />
       <Navbar/>
