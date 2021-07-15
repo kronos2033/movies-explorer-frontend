@@ -8,12 +8,17 @@
 .checkbox__text {
 	position: relative;
 	cursor: pointer;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 18px;
+
 }
 .checkbox__text:before {
 	content: '';
 	position: absolute;
-	top: -4px;
-	right: -55px;
+	top: 0;
+	right: -50px;
 	width: 40px;
 	height: 20px;
 	border-radius: 20px;
@@ -23,8 +28,8 @@
 .checkbox__text:after {
 	content: '';
 	position: absolute;
-	top: 0;
-	right: -31px;
+	top: 20%;
+	right: -25px;
 	width: 12px;
 	height: 12px;
 	border-radius: 50px;
@@ -35,5 +40,5 @@
 	background:  #2BE080;
 }
 .checkbox input:checked + .checkbox__text:after {
-	right: -51px;
+	right: -47px;
 }

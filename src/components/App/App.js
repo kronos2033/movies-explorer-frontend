@@ -5,7 +5,7 @@ import Movies from '../Movies/Movies';
 function App() {
   return (
     <>
-      <Main />
+      {/* <Main /> */}
       <Movies />
     </>
   );
