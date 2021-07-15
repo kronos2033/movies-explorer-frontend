@@ -1,0 +1,46 @@
+.movie__container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  background-color: #f9f9f9;
+  max-height: 134px;
+}
+
+.movie__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+margin: 22px 0px 22px 19px;
+}
+
+.movie__title {
+    margin: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.movie__duration {
+  margin: -20px 0 0 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  color: #a0a0a0;
+}
+
+.movie__delete {
+  width: 14px;
+  height: 12px;
+  background-image: url(../../images/delete.svg);
+  background-color: transparent;
+  background-position: center;
+  border: none;
+}
+
+.movie__image {
+  width: 220px;
+  height: 122px;
+  padding: 6px;
+}
