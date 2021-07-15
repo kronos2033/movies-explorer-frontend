@@ -7,14 +7,14 @@
 }
 
 .movie__info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-margin: 22px 0px 22px 19px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 22px 0px 22px 19px;
 }
 
 .movie__title {
-    margin: 0;
+  margin: 0;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -34,6 +34,15 @@ margin: 22px 0px 22px 19px;
   width: 14px;
   height: 12px;
   background-image: url(../../images/delete.svg);
+  background-color: transparent;
+  background-position: center;
+  border: none;
+}
+
+.movie__like {
+  width: 14px;
+  height: 12px;
+  background-image: url(../../images/like.svg);
   background-color: transparent;
   background-position: center;
   border: none;

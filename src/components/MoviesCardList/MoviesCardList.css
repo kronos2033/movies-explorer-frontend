@@ -1,0 +1,15 @@
+.movies-list__button {
+  display: flex;
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  width: 320px;
+  height: 36px;
+  background-color: #f9f9f9;
+  border: none;
+  margin: 50px auto 0;
+}
