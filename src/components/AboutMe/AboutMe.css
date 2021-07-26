@@ -94,8 +94,6 @@
   }
 }
 
-
-
 @media (max-width: 550px) {
   .about-me__info {
     flex-direction: column-reverse;

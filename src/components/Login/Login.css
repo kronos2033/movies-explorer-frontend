@@ -1,8 +1,6 @@
-
 .login__btn {
   margin-top: 221px;
 }
-
 
 @media (max-width: 320px) {
   .login__btn {

@@ -49,9 +49,9 @@
     flex-direction: column;
   }
   .footer__link:nth-child(2) {
-    margin:18px 0;
+    margin: 18px 0;
   }
   .footer__year {
-    color: #A0A0A0;
+    color: #a0a0a0;
   }
 }

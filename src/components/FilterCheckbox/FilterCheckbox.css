@@ -12,7 +12,7 @@
   line-height: 18px;
 }
 .checkbox__text:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: -50px;
@@ -23,7 +23,7 @@
   transition: 0.2s;
 }
 .checkbox__text:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 20%;
   right: -25px;

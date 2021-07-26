@@ -24,7 +24,7 @@
   border-bottom: 1px solid #fff;
 }
 
-@media (max-width:320px) {
+@media (max-width: 320px) {
   .nav__link {
     font-size: 11px;
   }
