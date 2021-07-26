@@ -8,8 +8,8 @@ function Footer () {
         <p className = 'footer__year'>&copy; 2021</p>
         <nav className = 'footer__links'>
             <a className = 'footer__link' href = 'https://praktikum.yandex.ru/'>Яндекс.Практикум</a>
-            <a className = 'footer__link' href = 'https://t.me/randomgodmod'>Telegram</a>
             <a className = 'footer__link' href = 'https://github.com/kronos2033'>GitHub</a>
+            <a className = 'footer__link' href = 'https://t.me/randomgodmod'>Telegram</a>
         </nav>
     </div>
 </section>

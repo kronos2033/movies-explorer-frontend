@@ -1,0 +1,48 @@
+.not-found {
+  text-align: center;
+}
+
+.not-found__title {
+  margin: 246px 0 0 0;
+
+  font-weight: normal;
+  font-size: 140px;
+  line-height: 169px;
+}
+
+.not-found__text {
+  margin: 5px 0 0 0;
+
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.not-found__back {
+  margin: 184px 0 0 0;
+
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  background: none;
+  border:none;  
+}
+
+@media (max-width: 768px) {
+  .not-found__title {
+    margin-top: 408px;
+    font-size: 140px;
+line-height: 169px;
+  }
+}
+
+@media (max-width: 320px) {
+  .not-found__title {
+    margin-top: 329px;
+    font-size: 80px;
+    line-height: 97px;
+  }
+  .not-found__back {
+    margin-top: 284px;
+  }
+}

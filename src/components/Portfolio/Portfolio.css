@@ -3,7 +3,6 @@
 }
 
 .portfolio__title {
-  font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 20px;
@@ -12,7 +11,7 @@
 
 .portfolio__projects {
   list-style: none;
-  margin: 50px 0 0 0;
+  margin: 50px 0 0;
   padding: 0;
 }
 
@@ -23,10 +22,10 @@
   padding-bottom: 18px;
   color: #000;
   display: block;
-  font-style: normal;
   font-weight: normal;
   font-size: 30px;
   line-height: 50px;
+  letter-spacing: -0.04em;
 }
 
 .portfolio__project {
@@ -40,4 +39,32 @@
   position: absolute;
   right: 0;
   content: url(../../images/portfolio-arrow.svg);
+}
+
+@media (max-width: 768px) {
+  .portfolio {
+    padding-top: 90px;
+  }
+  .portfolio__link {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 320px) {
+  .portfolio {
+    padding-top: 70px;
+  }
+  .portfolio__title {
+    font-size: 14px;
+  }
+  .portfolio__link {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .portfolio__projects {
+    margin-top: 40px;
+  }
+  .portfolio__link::after {
+    width: 18px;
+  }
 }

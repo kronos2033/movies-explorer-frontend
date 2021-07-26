@@ -2,12 +2,12 @@ import './Technologies.css';
 
 function Technologies() {
   return (
-    <section className='technologies section'>
-      <div className='technologies_narrow'>
-        <h2 className='technplogies__title'>Технологии</h2>
-        <article className='technplogies__article'>
+    <div className='technologies '>
+      <section id='technologies' className='section section_type_narrow'>
+        <h2 className='technologies__title'>Технологии</h2>
+        <article className='technologies__article'>
           <h3 className='technologies__about'>7 технологий</h3>
-          <p className='technonolies__text'>
+          <p className='technologies__text'>
             На курсе веб-разработки мы освоили технологии, которые применили в
             дипломном проекте.
           </p>
@@ -21,8 +21,8 @@ function Technologies() {
           <li className='technologies__technologie'>Express.js</li>
           <li className='technologies__technologie'>mongoDB</li>
         </ul>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
 

@@ -1,5 +1,4 @@
 .footer__title {
-  font-style: normal;
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
@@ -16,7 +15,6 @@
 }
 
 .footer__year {
-  font-style: normal;
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
@@ -27,14 +25,33 @@
   justify-content: space-between;
   align-items: center;
   width: 263px;
-
 }
 
 .footer__link {
   text-decoration: none;
-  font-style: normal;
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
-   color: black;
+  color: black;
+}
+
+@media (max-width: 320px) {
+  .footer__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .footer_container {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .footer__links {
+    margin: 30px 0;
+    flex-direction: column;
+  }
+  .footer__link:nth-child(2) {
+    margin:18px 0;
+  }
+  .footer__year {
+    color: #A0A0A0;
+  }
 }

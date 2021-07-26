@@ -1,10 +1,4 @@
-.about {
-  max-width: 1140px;
-  margin: 0 auto;
-}
-
 .about__title {
-  font-style: normal;
   font-weight: normal;
   font-size: 22px;
   line-height: 27px;
@@ -20,42 +14,34 @@
 }
 
 .about__diplom-title {
-  font-style: normal;
   font-weight: normal;
   font-size: 20px;
   line-height: 24px;
 }
 
 .about__diplom-text {
-  font-family: Inter;
-  font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
 }
 
 .about__duration {
+  margin-bottom: 110px;
   display: grid;
   grid-template-columns: 1fr 4fr;
   text-align: center;
-  margin: 110px 0;
-}
-
-.about__first-week {
-  font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
+}
+
+.about__first-week {
   color: #fff;
   padding: 9px 14px;
   background-color: #000;
 }
 
 .about__second-week {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
   color: #000;
   padding: 9px 14px;
   background-color: #f2f2f2;
@@ -67,4 +53,51 @@
   line-height: 17px;
   text-align: center;
   color: #a0a0a0;
+}
+
+@media (max-width: 768px) {
+  .about__title {
+    margin-top: 90px;
+  }
+  .about__diplom-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+@media (max-width: 320px) {
+  .about__title {
+    margin-top: 70px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .about__diplom-title {
+    margin-top: 40px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .about__diplom-text {
+    margin-bottom: 56px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .about__duration {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about__first-week {
+    padding: 11px 10px;
+    width: 80px;
+  }
+  .about__second-week {
+    padding: 11px 10px;
+  }
+  .about__techno {
+    font-size: 11px;
+    line-height: 13px;
+  }
+  .about__diplom-container {
+    margin-top: 60px;
+    flex-direction: column;
+  }
 }

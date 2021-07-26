@@ -1,9 +1,29 @@
-.main { 
-    max-width: 1280px;
-    margin: 0 auto;
+.section {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.section_type_narrow {
+  max-width: 1140px;
+  margin: 0 70px;
 }
 
-.section_type_narrow {
-    max-width: 1140px;
-    margin: 0 auto;
+@media (max-width: 1024px) {
+  .section_type_narrow {
+    max-width: 900px;
+    margin: 0 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section_type_narrow {
+    max-width: 668px;
+    margin: 0 50px;
+  }
+}
+
+@media (max-width: 320px) {
+  .section_type_narrow {
+    max-width: 300px;
+    margin: 0 10px;
+  }
 }

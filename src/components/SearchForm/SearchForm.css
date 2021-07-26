@@ -7,13 +7,17 @@
 }
 
 .search__form {
+    width: 100%;
+    display: flex;
+    flex:1 1 auto;
     position: relative;
     margin-right: 40px;
 }
 
 .search__input {
-    width: 932px;
-    border: 1px solid #AAA;
+    
+    flex:1 1 auto;
+    border: 2px solid #AAA;
     border-radius: 50px;
     padding: 15px 0;
     outline:none;
@@ -36,4 +40,19 @@
     border:none;
     border-radius: 48px;
     margin: 8px;
+}
+
+@media (max-width:768px) {
+    .search {
+    flex-direction: column;
+    }
+  .search__form {
+      margin: 0 0 38px;
+  }
+}
+
+@media (max-width:320px) {
+    .search__form {
+        margin: 0 0 45px;
+    }
 }
