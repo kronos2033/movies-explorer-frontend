@@ -9,7 +9,8 @@
 
 .about__diplom-container {
   margin-top: 70px;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
   justify-content: space-between;
 }
 
@@ -64,6 +65,13 @@
     line-height: 18px;
   }
 }
+
+@media (max-width:572px) {
+  .about__diplom-container {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 320px) {
   .about__title {
     margin-top: 70px;
@@ -98,6 +106,5 @@
   }
   .about__diplom-container {
     margin-top: 60px;
-    flex-direction: column;
   }
 }

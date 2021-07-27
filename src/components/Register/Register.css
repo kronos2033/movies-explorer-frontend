@@ -66,6 +66,14 @@
   border: none;
   border-radius: 3px;
 }
+
+.form__btn_disabled {
+  background-color: #aaa;
+}
+
+.form__btn:hover {
+  opacity: 0.8;
+}
 .register__btn {
   margin-top: 146px;
 }

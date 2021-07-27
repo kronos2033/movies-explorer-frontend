@@ -3,7 +3,7 @@ import headerLogo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 function Register(props) {
   return (
-    <section className='section'>
+    <section className='section section_type_narrow'>
       <div className='register sign'>
         <img src={headerLogo} alt='' className='register__icon sign__icon' />
         <h1 className='register__title sign__title'>Добро пожаловать!</h1>
@@ -14,6 +14,9 @@ function Register(props) {
           <input
             type='text'
             className='form__input register__input register__input_name'
+            min='2'
+            max='20'
+            required
           />
           <span className='form__text register__text register__text_email'>
             E-mail
@@ -21,6 +24,7 @@ function Register(props) {
           <input
             type='text'
             className='form__input register__input register__input_email'
+            required
           />
           <span className='form__text register__text register__text_password'>
             Пароль
@@ -28,6 +32,7 @@ function Register(props) {
           <input
             type='text'
             className='form__input register__input register__input_password'
+            required
           />
           <button className='form__btn register__btn'>
             Зарегистрироваться

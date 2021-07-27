@@ -6,8 +6,6 @@ import Register from '../Register/Register';
 import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
 import { Route, Switch } from 'react-router-dom';
 function App() {
   return (

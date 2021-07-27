@@ -103,6 +103,9 @@
     font-size: 18px;
     line-height: 22px;
   }
+  .header__links {
+    margin-right: 30px;
+  }
   .header__link_profile {
     justify-self: end;
     align-self: end;
@@ -165,7 +168,11 @@
   }
 }
 
-@media (max-width: 319px) {
+@media (max-width: 320px) {
+  .header__account {
+    width: 100vw;
+
+  }
   .header__logo {
     margin-left: 15px;
   }

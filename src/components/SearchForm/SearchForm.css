@@ -22,6 +22,9 @@
   outline: none;
   text-indent: 22px;
 }
+.search__input:focus {
+  border: 2px solid #000;
+}
 
 .search__input::placeholder {
   color: #a0a0a0;
@@ -39,6 +42,15 @@
   border: none;
   border-radius: 48px;
   margin: 8px;
+}
+
+.search__button:hover {
+  opacity: 0.8;
+  transition: 0.5s ease;
+}
+
+.search__button_disabled {
+  background-color: #aaa;
 }
 
 @media (max-width: 768px) {

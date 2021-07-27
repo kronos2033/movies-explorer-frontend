@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Login(props) {
   return (
-    <section className='section'>
+    <section className='section section_type_narrow'>
       <div className='login sign'>
         <img src={headerLogo} alt='' className='login__icon sign__icon' />
         <h1 className='login__title sign__title'>Рады видеть!</h1>
@@ -15,6 +15,7 @@ function Login(props) {
           <input
             type='text'
             className='form__input login__input login__input_email'
+            required
           />
           <span className='form__text login__text login__text_password'>
             Пароль
@@ -22,6 +23,8 @@ function Login(props) {
           <input
             type='text'
             className='form__input login__input login__input_password'
+            min='3'
+            required
           />
           <button className='form__btn login__btn'>Войти</button>
         </form>
