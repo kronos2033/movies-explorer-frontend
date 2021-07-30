@@ -1,0 +1,113 @@
+.sign {
+  max-width: 396px;
+  margin: 0 auto;
+}
+.sign__icon {
+  margin-top: 70px;
+}
+.sign__title {
+  margin-top: 36px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+.sign__question {
+  display: inline;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #a0a0a0;
+}
+.sign__container {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+.sign__link {
+  display: inline;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+}
+.form {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+}
+.form__text {
+  margin-top: 24px;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #a0a0a0;
+}
+.form__input {
+  padding-bottom: 10px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  border: none;
+  border-bottom: 1px solid #a0a0a0;
+}
+.form__input:focus {
+  border-bottom: 2px solid #000;
+  outline: none;
+}
+
+.form__btn {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  padding: 14px 0;
+  color: #fff;
+  background-color: #000;
+  border: none;
+  border-radius: 3px;
+}
+
+.form__btn_disabled {
+  background-color: #aaa;
+}
+
+.form__btn:hover {
+  opacity: 0.8;
+}
+.register__btn {
+  margin-top: 146px;
+}
+
+@media (max-width: 768px) {
+  .sign__icon {
+    margin-top: 232px;
+  }
+}
+
+@media (max-width: 320px) {
+  .sign {
+    max-width: 260px;
+  }
+  .sign__icon {
+    margin-top: 65px;
+  }
+  .sign__title {
+    margin-top: 50px;
+  }
+  .form {
+    margin-top: 80px;
+  }
+  .form__btn {
+    margin-top: 222px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .sign__question {
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .sign__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

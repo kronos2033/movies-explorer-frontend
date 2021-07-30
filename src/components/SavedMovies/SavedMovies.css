@@ -1,0 +1,11 @@
+.saved-movies {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+@media (max-width: 520px) {
+  .movie__delete {
+    margin-bottom: 15px;
+    justify-self: end;
+  }
+}
