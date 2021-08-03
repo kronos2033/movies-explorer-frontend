@@ -7,16 +7,15 @@ import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import * as register from "../../utils/register";
+import * as userApi from "../../utils/userApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 // c
 function App() {
+  const [currentUser, setCurrentUser] = useState({ name:'', email: ''})
   const [loggedIn, setLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({ email: "", name: "" });
   const history = useHistory();
-
   useEffect(() => {
     if (loggedIn) {
       history.push("/movies");
@@ -27,10 +26,20 @@ function App() {
     jwtTokenCheck();
   }, []);
 
+  useEffect(()=> {
+    userApi.getUserInfo()
+    .then((res)=> {
+      setCurrentUser(res);
+    })
+    .catch((err)=> {
+      console.log(err);
+    })
+  })
+
   function jwtTokenCheck() {
     if (localStorage.getItem("jwt")) {
       let jwt = localStorage.getItem("jwt");
-      register.getContent(jwt).then((res) => {
+      userApi.getContent(jwt).then((res) => {
         if (res.email) {
           setLoggedIn(true);
         }
@@ -38,33 +47,43 @@ function App() {
     }
   }
   function handleLogin({ email, password }) {
-    return register
+    return userApi
       .autorize(email, password)
       .then((res) => {
         if (res.token) {
           history.push("/movies");
           localStorage.setItem("jwt", res.token);
           setLoggedIn(true);
-          console.log("in then");
         }
       })
       .catch((err) => {
         console.log("что то пошло не так");
       });
   }
-
+  function handleLogout () {
+    localStorage.removeItem('jwt');
+    history.push('/signin');
+    setLoggedIn(false);
+  }
   function handleRegister({ name, email, password }) {
-    return register
+    return userApi
       .register(name, email, password)
       .then((res) => {
-        console.log(res);
         history.push("/sign-in");
       })
       .catch((err) => {
         console.log(`Ошибка при регистрации: ${err}`);
       });
   }
-
+;
+    function handleUpdateProfile ({name, email}) {
+      console.log(name,email)
+      userApi.updateUserInfo(name, email)
+      .then((newUserInfo)=>{
+        setCurrentUser(newUserInfo)
+      })
+      .catch((err) => console.log(err))
+    }
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -73,6 +92,8 @@ function App() {
             path="/profile"
             component={Profile}
             loggedIn={loggedIn}
+            onUpdate={handleUpdateProfile}
+            onLogout={handleLogout}
           />
           <ProtectedRoute
             path="/movies"

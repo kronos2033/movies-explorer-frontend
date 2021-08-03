@@ -26,7 +26,6 @@ export const register = (name, email, password) => {
 
 export const getContent = (token) => {
   return fetch(`${BASE_URL}users/me`, {
-    method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -34,3 +33,26 @@ export const getContent = (token) => {
     },
   }).then(checkResponse);
 };
+
+export const getUserInfo = () => {
+  return fetch(`${BASE_URL}users/me`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+  }).then(checkResponse);
+}
+
+export const updateUserInfo = (name, email) => {
+return fetch (`${BASE_URL}users/me`,{
+  method: "PATCH",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  },
+  body: JSON.stringify({ name, email }),
+})
+.then(checkResponse);
+}
