@@ -2,13 +2,45 @@ import "./Login.css";
 import headerLogo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { validate } from "react-email-validator";
+
 
 function Login(props) {
   const [userData, setUserData] = useState({ email: '', password: '' });
+  const [emailValidateError, setEmailValidateError] = useState(
+    "Введите валидный email"
+  );
+  const [passwordError, setPasswordError] = useState(
+    "Пароль должен содержать минимум 3 символа"
+  );
+
+  function validateInput(name, value) {
+    switch (name) {
+      case "password":
+        if (value.length < 3 && name === "password") {
+          setPasswordError("Пароль должен содержать минимум 3 символа");
+        } else {
+          setPasswordError("");
+        }
+        break;
+      case "email":
+        if (!validate(value) && name === "email") {
+          setEmailValidateError("Введите верный email");
+        } else {
+          setEmailValidateError("");
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
   function handleChange(e) {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
+    validateInput(name, value);
   }
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -34,6 +66,9 @@ function Login(props) {
             value={userData.email}
             required
           />
+          <span className=" form__text form__error-text">
+            {emailValidateError}
+          </span>
           <span className="form__text login__text login__text_password">
             Пароль
           </span>
@@ -46,7 +81,13 @@ function Login(props) {
             min="3"
             required
           />
-          <button className="form__btn login__btn">Войти</button>
+          <span className=" form__text form__error-text">{passwordError}</span>
+          
+          <button className={
+              emailValidateError || passwordError
+                ? "form__btn register__btn form__btn_disabled"
+                : "form__btn register__btn"
+            }>Войти</button>
         </form>
       </div>
       <div className="login__container sign__container">

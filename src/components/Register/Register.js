@@ -1,7 +1,7 @@
 import "./Register.css";
 import headerLogo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { validate } from "react-email-validator";
 function Register(props) {
   const [userData, setUserData] = useState({
@@ -9,17 +9,17 @@ function Register(props) {
     email: "",
     password: "",
   });
-
   const [emailValidateError, setEmailValidateError] = useState(
     "Введите валидный email"
   );
-  const [nameError, setNameError] = useState("Имя должно содержать минимум 3 символа");
-  const [passwordError, setPasswordError] = useState("Пароль должен содержать минимум 3 символа");
-  
+  const [nameError, setNameError] = useState(
+    "Имя должно содержать минимум 3 символа"
+  );
+  const [passwordError, setPasswordError] = useState(
+    "Пароль должен содержать минимум 3 символа"
+  );
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
+  function validateInput(name, value) {
     switch (name) {
       case "name":
         if (value.length < 3 && name === "name") {
@@ -28,7 +28,7 @@ function Register(props) {
           setNameError("");
         }
         break;
-        case "email":
+      case "email":
         if (!validate(value) && name === "email") {
           setEmailValidateError("Введите верный email");
         } else {
@@ -45,6 +45,12 @@ function Register(props) {
       default:
         break;
     }
+  }
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+    validateInput(name,value)
   }
 
   const handleSubmit = (e) => {
