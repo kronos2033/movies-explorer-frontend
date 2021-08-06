@@ -34,7 +34,7 @@ function App() {
     .catch((err)=> {
       console.log(err);
     })
-  })
+  },[])
 
   function jwtTokenCheck() {
     if (localStorage.getItem("jwt")) {

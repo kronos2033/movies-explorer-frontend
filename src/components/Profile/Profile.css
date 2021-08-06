@@ -51,7 +51,6 @@
   cursor: pointer;
   background: none;
   border: none;
-
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
@@ -59,6 +58,10 @@
 
 .profile__button_correction {
   margin-top: 220px;
+}
+
+.profiel__button_disabled {
+  color: #ff4062;
 }
 
 .profile__button_exit {

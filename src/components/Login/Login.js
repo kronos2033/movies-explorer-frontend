@@ -85,8 +85,8 @@ function Login(props) {
           
           <button className={
               emailValidateError || passwordError
-                ? "form__btn register__btn form__btn_disabled"
-                : "form__btn register__btn"
+                ? "form__btn form__btn_disabled"
+                : "form__btn"
             }>Войти</button>
         </form>
       </div>
