@@ -10,34 +10,42 @@ function Register(props) {
     password: "",
   });
 
-  const [emailValidateError, setEmailValidateError] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [buttonActive, setButtonActive] = useState(false);
+  const [emailValidateError, setEmailValidateError] = useState(
+    "Введите валидный email"
+  );
+  const [nameError, setNameError] = useState("Имя должно содержать минимум 3 символа");
+  const [passwordError, setPasswordError] = useState("Пароль должен содержать минимум 3 символа");
+  
 
   function handleChange(e) {
     const { name, value } = e.target;
-    if(!validate(value) && name==="email"){
-      setEmailValidateError("Введите верный email")
-    } else {
-      setEmailValidateError("")
-    }
     setUserData({ ...userData, [name]: value });
-    if(value<3 && name==="name") {
-      setNameError("Имя должно содержать минимум 3 символа")
-    } else {
-      setNameError("")
-    }
-    if(value<3 && name==="password") {
-      setPasswordError("Пароль должен содержать минимум 3 символа")
-    } else {
-      setPasswordError("")
-    }
-    if(emailValidateError || nameError || passwordError){ 
-      setButtonActive(true)
+    switch (name) {
+      case "name":
+        if (value.length < 3 && name === "name") {
+          setNameError("Имя должно содержать минимум 3 символа");
+        } else {
+          setNameError("");
+        }
+        break;
+        case "email":
+        if (!validate(value) && name === "email") {
+          setEmailValidateError("Введите верный email");
+        } else {
+          setEmailValidateError("");
+        }
+        break;
+      case "password":
+        if (value.length < 3 && name === "password") {
+          setPasswordError("Пароль должен содержать минимум 3 символа");
+        } else {
+          setPasswordError("");
+        }
+        break;
+      default:
+        break;
     }
   }
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,6 +71,7 @@ function Register(props) {
             onChange={handleChange}
             required
           />
+          <span className=" form__text form__error-text">{nameError}</span>
           <span className="form__text register__text register__text_email">
             E-mail
           </span>
@@ -88,7 +97,14 @@ function Register(props) {
             onChange={handleChange}
             required
           />
-          <button className={buttonActive ? "form__btn register__btn" : "form__btn register__btn form__btn_disabled" }>
+          <span className=" form__text form__error-text">{passwordError}</span>
+          <button
+            className={
+              emailValidateError || nameError || passwordError
+                ? "form__btn register__btn form__btn_disabled"
+                : "form__btn register__btn"
+            }
+          >
             Зарегистрироваться
           </button>
         </form>
