@@ -1,24 +1,24 @@
-import "./App.css";
-import Main from "../Main/Main";
-import SavedMovies from "../SavedMovies/SavedMovies";
-import Movies from "../Movies/Movies";
-import Register from "../Register/Register";
-import Profile from "../Profile/Profile";
-import Login from "../Login/Login";
-import NotFoundPage from "../NotFoundPage/NotFoundPage";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import * as userApi from "../../utils/userApi";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import { useState, useEffect } from "react";
+import './App.css';
+import Main from '../Main/Main';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import Movies from '../Movies/Movies';
+import Register from '../Register/Register';
+import Profile from '../Profile/Profile';
+import Login from '../Login/Login';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import * as userApi from '../../utils/userApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 // c
 function App() {
-  const [currentUser, setCurrentUser] = useState({ name:'', email: ''})
+  const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
   useEffect(() => {
     if (loggedIn) {
-      history.push("/movies");
+      history.push('/movies');
     }
   }, [loggedIn]);
 
@@ -26,19 +26,20 @@ function App() {
     jwtTokenCheck();
   }, []);
 
-  useEffect(()=> {
-    userApi.getUserInfo()
-    .then((res)=> {
-      setCurrentUser(res);
-    })
-    .catch((err)=> {
-      console.log(err);
-    })
-  },[])
+  useEffect(() => {
+    userApi
+      .getUserInfo()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   function jwtTokenCheck() {
-    if (localStorage.getItem("jwt")) {
-      let jwt = localStorage.getItem("jwt");
+    if (localStorage.getItem('jwt')) {
+      let jwt = localStorage.getItem('jwt');
       userApi.getContent(jwt).then((res) => {
         if (res.email) {
           setLoggedIn(true);
@@ -51,16 +52,16 @@ function App() {
       .autorize(email, password)
       .then((res) => {
         if (res.token) {
-          history.push("/movies");
-          localStorage.setItem("jwt", res.token);
+          history.push('/movies');
+          localStorage.setItem('jwt', res.token);
           setLoggedIn(true);
         }
       })
       .catch((err) => {
-        console.log("что то пошло не так");
+        console.log('что то пошло не так');
       });
   }
-  function handleLogout () {
+  function handleLogout() {
     localStorage.removeItem('jwt');
     history.push('/signin');
     setLoggedIn(false);
@@ -69,21 +70,21 @@ function App() {
     return userApi
       .register(name, email, password)
       .then((res) => {
-        history.push("/sign-in");
+        history.push('/sign-in');
       })
       .catch((err) => {
         console.log(`Ошибка при регистрации: ${err}`);
       });
   }
-;
-    function handleUpdateProfile ({name, email}) {
-      console.log(name,email)
-      userApi.updateUserInfo(name, email)
-      .then((newUserInfo)=>{
-        setCurrentUser(newUserInfo)
+  function handleUpdateProfile({ name, email }) {
+    console.log(name, email);
+    userApi
+      .updateUserInfo(name, email)
+      .then((newUserInfo) => {
+        setCurrentUser(newUserInfo);
       })
-      .catch((err) => console.log(err))
-    }
+      .catch((err) => console.log(err));
+  }
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>

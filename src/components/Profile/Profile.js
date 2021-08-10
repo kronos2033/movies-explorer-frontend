@@ -1,31 +1,31 @@
-import Header from "../Header/Header";
-import "./Profile.css";
-import { useState } from "react";
-import { validate } from "react-email-validator";
+import Header from '../Header/Header';
+import './Profile.css';
+import { useState } from 'react';
+import { validate } from 'react-email-validator';
 
 function Profile(props) {
-  const [userData, setUserData] = useState({ name: "", email: "" });
+  const [userData, setUserData] = useState({ name: '', email: '' });
   const [emailValidateError, setEmailValidateError] = useState(
-    "Введите валидный email"
+    'Введите валидный email',
   );
   const [nameError, setNameError] = useState(
-    "Имя должно содержать минимум 3 символа"
+    'Имя должно содержать минимум 3 символа',
   );
 
   function validateInput(name, value) {
     switch (name) {
-      case "name":
-        if (value.length < 3 && name === "name") {
-          setNameError("Имя должно содержать минимум 3 символа");
+      case 'name':
+        if (value.length < 3 && name === 'name') {
+          setNameError('Имя должно содержать минимум 3 символа');
         } else {
-          setNameError("");
+          setNameError('');
         }
         break;
-      case "email":
-        if (!validate(value) && name === "email") {
-          setEmailValidateError("Введите верный email");
+      case 'email':
+        if (!validate(value) && name === 'email') {
+          setEmailValidateError('Введите верный email');
         } else {
-          setEmailValidateError("");
+          setEmailValidateError('');
         }
         break;
       default:
@@ -70,14 +70,14 @@ function Profile(props) {
               onChange={handleChange}
             />
           </div>
-          <span className=" form__text form__error-text">
+          <span className="form__text form__error-text">
             {emailValidateError}
           </span>
           <button
             className={
               emailValidateError || nameError
-                ? "profile__button profile__button_correction profiel__button_disabled"
-                : "profile__button profile__button_correction"
+                ? 'profile__button profile__button_correction profiel__button_disabled'
+                : 'profile__button profile__button_correction'
             }
             onClick={handleSubmit}
           >

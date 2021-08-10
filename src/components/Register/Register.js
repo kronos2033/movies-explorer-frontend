@@ -1,45 +1,45 @@
-import "./Register.css";
-import headerLogo from "../../images/logo.svg";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { validate } from "react-email-validator";
+import './Register.css';
+import headerLogo from '../../images/logo.svg';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { validate } from 'react-email-validator';
 function Register(props) {
   const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    password: "",
+    name: '',
+    email: '',
+    password: '',
   });
   const [emailValidateError, setEmailValidateError] = useState(
-    "Введите валидный email"
+    'Введите валидный email',
   );
   const [nameError, setNameError] = useState(
-    "Имя должно содержать минимум 3 символа"
+    'Имя должно содержать минимум 3 символа',
   );
   const [passwordError, setPasswordError] = useState(
-    "Пароль должен содержать минимум 3 символа"
+    'Пароль должен содержать минимум 3 символа',
   );
 
   function validateInput(name, value) {
     switch (name) {
-      case "name":
-        if (value.length < 3 && name === "name") {
-          setNameError("Имя должно содержать минимум 3 символа");
+      case 'name':
+        if (value.length < 3 && name === 'name') {
+          setNameError('Имя должно содержать минимум 3 символа');
         } else {
-          setNameError("");
+          setNameError('');
         }
         break;
-      case "email":
-        if (!validate(value) && name === "email") {
-          setEmailValidateError("Введите верный email");
+      case 'email':
+        if (!validate(value) && name === 'email') {
+          setEmailValidateError('Введите верный email');
         } else {
-          setEmailValidateError("");
+          setEmailValidateError('');
         }
         break;
-      case "password":
-        if (value.length < 3 && name === "password") {
-          setPasswordError("Пароль должен содержать минимум 3 символа");
+      case 'password':
+        if (value.length < 3 && name === 'password') {
+          setPasswordError('Пароль должен содержать минимум 3 символа');
         } else {
-          setPasswordError("");
+          setPasswordError('');
         }
         break;
       default:
@@ -50,7 +50,7 @@ function Register(props) {
   function handleChange(e) {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
-    validateInput(name,value)
+    validateInput(name, value);
   }
 
   const handleSubmit = (e) => {
@@ -107,8 +107,8 @@ function Register(props) {
           <button
             className={
               emailValidateError || nameError || passwordError
-                ? "form__btn register__btn form__btn_disabled"
-                : "form__btn register__btn"
+                ? 'form__btn register__btn form__btn_disabled'
+                : 'form__btn register__btn'
             }
           >
             Зарегистрироваться
@@ -117,7 +117,7 @@ function Register(props) {
       </div>
       <div className="register__container sign__container">
         <span className="register__question sign__question">
-          Уже зарегистрированы?{" "}
+          Уже зарегистрированы?{' '}
         </span>
         <Link to="/sign-in" className="register__login sign__link">
           &nbsp;Войти

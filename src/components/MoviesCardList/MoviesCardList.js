@@ -5,14 +5,12 @@ function MoviesCardList(props) {
     <>
       {props.movies.map((movie) => {
         return (
-          <>
             <MoviesCard
               movieName={movie.name}
               movieDuration={movie.duration}
               movieImage={movie.image}
               savedMovies={props.savedMovies}
             />
-          </>
         );
       })}
       {props.movies.length > 5 && (
