@@ -8,19 +8,22 @@ import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import * as userApi from '../../utils/userApi';
+import * as movieApi from '../../utils/movieApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { res } from 'react-email-validator';
 // c
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
+  const [movies, setMovies] = useState({})
   const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
   useEffect(() => {
     if (loggedIn) {
       history.push('/movies');
     }
-  }, [loggedIn]);
+  }, [loggedIn, history]);
 
   useEffect(() => {
     jwtTokenCheck();
@@ -37,6 +40,17 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    movieApi
+      .getMovies()
+      .then((res) => {
+        setMovies(res)
+      })
+      .catch((err) => {
+        console.log('Не удалось получить фильмы');
+      });
+  }, []);
+
   function jwtTokenCheck() {
     if (localStorage.getItem('jwt')) {
       let jwt = localStorage.getItem('jwt');
@@ -47,6 +61,7 @@ function App() {
       });
     }
   }
+
   function handleLogin({ email, password }) {
     return userApi
       .autorize(email, password)
@@ -99,6 +114,7 @@ function App() {
           <ProtectedRoute
             path="/movies"
             component={Movies}
+            moviesList={movies}
             loggedIn={loggedIn}
           />
           <ProtectedRoute

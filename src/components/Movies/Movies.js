@@ -3,15 +3,16 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { allMovies } from '../../utils/constants';
+
 function Movies(props) {
   const savedMovies = false;
+  console.log(props.movies)
   return (
     <>
       <Header />
       <section className="section movies">
         <SearchForm />
-        <MoviesCardList movies={allMovies} savedMovies={savedMovies} />
+        <MoviesCardList movies={props.moviesList} savedMovies={savedMovies} />
       </section>
       <Footer />
     </>

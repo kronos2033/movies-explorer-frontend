@@ -43,10 +43,7 @@ function Login(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     props.onLogin(userData);
-    console.log('submit')
-
   }
   
   return (

@@ -1,14 +1,18 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import {MOVIE_URL} from '../../utils/movieApi'
 function MoviesCardList(props) {
+  const moviesArray = Array.from(props.movies)
   return (
     <>
-      {props.movies.map((movie) => {
+      {moviesArray.map((movie) => {
+    console.log(movie)
         return (
             <MoviesCard
-              movieName={movie.name}
+              key={movie.id}
+              movieName={movie.nameRU}
               movieDuration={movie.duration}
-              movieImage={movie.image}
+              movieImage={`${MOVIE_URL}${movie.image.url}`}
               savedMovies={props.savedMovies}
             />
         );
