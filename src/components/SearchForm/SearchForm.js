@@ -1,21 +1,27 @@
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import { useState } from 'react';
 import * as movieApi from '../../utils/movieApi';
 
 
 function SearchForm(props) {
-  const [searchMovieName, setSearchMovieName] = useState('Фонко');
+  const [searchMovieName, setSearchMovieName] = useState('');
+  function test() {
+    console.log('click')
+  }
   function handleChange(e) {
     setSearchMovieName(e.target.value);
   }
-  function handleSearchMovies(movieName) {
+  function handleSearchMovies(e) {
+e.preventDefault();
+    console.log('work')
     movieApi
       .getMoviesByName()
       .then((res) => {
         const filteredMovies = res.filter((movie) =>
-          movie.nameRU.includes(movieName),
+          movie.nameRU.includes(searchMovieName),
         );
-        setSearchMoviesArray(filteredMovies);
+        props.search(filteredMovies);
       })
       .catch((err) => {
         console.log('Ошибка при попытке получить массив фильмов:', err);
@@ -28,10 +34,10 @@ function SearchForm(props) {
           className="search__input"
           type="input"
           placeholder="Фильмы"
-          onInput={handleChange}
+          onChange={handleChange}
           required
         ></input>
-        <button onClick={handleSearchMovies(searchMovieName)} className="search__button"></button>
+        <button onClick={handleSearchMovies} className="search__button"></button>
       </form>
       <FilterCheckbox />
     </section>

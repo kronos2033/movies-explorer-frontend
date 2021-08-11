@@ -8,7 +8,7 @@ import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import * as userApi from '../../utils/userApi';
-import * as movieApi from '../../utils/movieApi';
+// import * as movieApi from '../../utils/movieApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -111,6 +111,7 @@ function App() {
             component={Movies}
             // search={setSearchMovieName}
             // handleSearch={handleSearchMovies}
+            search = {setSearchMoviesArray}
             moviesArray={searchMoviesArray}
             loggedIn={loggedIn}
           />
