@@ -8,14 +8,12 @@ import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import * as userApi from '../../utils/userApi';
-// import * as movieApi from '../../utils/movieApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
-  const [movies, setMovies] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [searchMoviesArray, setSearchMoviesArray] = useState([]);
   

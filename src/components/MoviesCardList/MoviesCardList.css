@@ -12,3 +12,10 @@
   border: none;
   margin: 50px auto 0;
 }
+.movie-list__notfound {
+  text-align: center;
+  margin: 150px;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 50px;
+}

@@ -6,16 +6,15 @@ import Footer from '../Footer/Footer';
 import { useState } from 'react';
 
 function Movies(props) {
-  
+  const [wrongMessage, setWrongMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const savedMovies = false;
-  console.log('isLoading' + isLoading)
   return (
     <>
       <Header />
       <section className="section movies">
-        <SearchForm setLoading={setIsLoading} search={props.search}/>
-        <MoviesCardList movies={props.moviesArray} isLoading ={isLoading} savedMovies={savedMovies} />
+        <SearchForm setLoading={setIsLoading} search={props.search} error={setWrongMessage}/>
+        <MoviesCardList movies={props.moviesArray} error={wrongMessage} isLoading ={isLoading} savedMovies={savedMovies} />
       </section>
       <Footer />
     </>
