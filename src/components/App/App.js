@@ -18,7 +18,7 @@ function App() {
   const [movies, setMovies] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [searchMoviesArray, setSearchMoviesArray] = useState([]);
-  // const [searchMovieName, setSearchMovieName] = useState('Фонко');
+  
   const history = useHistory();
   useEffect(() => {
     if (loggedIn) {

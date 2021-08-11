@@ -2,50 +2,62 @@ import './SearchForm.css';
 import { useState, useEffect } from 'react';
 import * as movieApi from '../../utils/movieApi';
 
-function SearchForm(props) {
-  const [searchMovieParametrs, setSearchMovieParametrs] = useState({
+
+function SearchForm(props) {  
+  const [searchParametrs, setSearchParametrs] = useState({
     name: '',
     checked: false,
   });
-  const searchParams = JSON.parse(localStorage.getItem('searchParams'));
+  const initialSearchParams = JSON.parse(localStorage.getItem('searchParams'));
+  console.log(initialSearchParams)
 
   useEffect(() => {
+    props.setLoading(true)
     movieApi
       .getMoviesByName()
       .then((res) => {
         const filteredMovies = res.filter((movie) =>
-          movie.nameRU.includes(searchParams.name),
+          movie.nameRU.includes(initialSearchParams.name)
         );
         props.search(filteredMovies);
+        props.setLoading(false)
+        
       })
       .catch((err) => {
         console.log('Ошибка при попытке получить массив фильмов:', err);
       });
   }, []);
 
-  function handleChangeInput(e) {
-    setSearchMovieParametrs({ name: e.target.value });
-  }
-  function handleChangeCheckbox(e) {
-    setSearchMovieParametrs({ checked: !searchMovieParametrs.checked })
-  }
   function handleSearchMovies(e) {
+    props.setLoading(true)
     e.preventDefault();
     movieApi
       .getMoviesByName()
       .then((res) => {
         const filteredMovies = res.filter((movie) =>
-          movie.nameRU.includes(searchMovieParametrs.name),
+          movie.nameRU.includes(searchParametrs.name),
         );
         props.search(filteredMovies);
         localStorage.setItem(
           'searchParams',
-          JSON.stringify(searchMovieParametrs),
+          JSON.stringify(searchParametrs),
         );
+        props.setLoading(false)
       })
       .catch((err) => {
         console.log('Ошибка при попытке получить массив фильмов:', err);
       });
+  }
+
+  function handleChangeInput(e) {
+    setSearchParametrs({
+      name: e.target.value,
+      checked: searchParametrs.checked,
+    });
+  }
+
+  function handleChangeCheckbox(e) {
+    setSearchParametrs({ name:searchParametrs.name, checked: !searchParametrs.checked });
   }
 
   return (
@@ -63,7 +75,7 @@ function SearchForm(props) {
       <label className="checkbox">
         <input
           type="checkbox"
-          checked={searchMovieParametrs.checked}
+          checked={searchParametrs.checked}
           onChange={handleChangeCheckbox}
         />
         <div className="checkbox__text">Короткометражки</div>
