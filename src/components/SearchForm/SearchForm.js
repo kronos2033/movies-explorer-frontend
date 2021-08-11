@@ -7,9 +7,9 @@ function SearchForm(props) {
     name: '',
     checked: false,
   });
-  const initialSearchParams = JSON.parse(localStorage.getItem('searchParams'));
 
-useEffect((e) => {
+useEffect(() => {
+  const initialSearchParams = JSON.parse(localStorage.getItem('searchParams'));
   handleSearchMovies(initialSearchParams.name, initialSearchParams.checked)
 },[])
   // useEffect((e) => {
