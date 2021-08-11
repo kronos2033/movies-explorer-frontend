@@ -10,7 +10,7 @@ function Movies(props) {
     <>
       <Header />
       <section className="section movies">
-        <SearchForm search={props.search} handleSearch={props.handleSearchMovies}/>
+        <SearchForm search={props.search}/>
         <MoviesCardList movies={props.moviesArray} savedMovies={savedMovies} />
       </section>
       <Footer />

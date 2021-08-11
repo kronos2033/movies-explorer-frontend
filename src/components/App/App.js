@@ -41,10 +41,8 @@ function App() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   searchMovies(searchMovieName);
-  // }, [searchMovieName]);
   
+    
   function jwtTokenCheck() {
     if (localStorage.getItem('jwt')) {
       let jwt = localStorage.getItem('jwt');
