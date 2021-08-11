@@ -12,12 +12,13 @@ import * as movieApi from '../../utils/movieApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { res } from 'react-email-validator';
-// c
+
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
-  const [movies, setMovies] = useState({})
+  const [movies, setMovies] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [searchMoviesArray, setSearchMoviesArray] = useState([]);
+  // const [searchMovieName, setSearchMovieName] = useState('Фонко');
   const history = useHistory();
   useEffect(() => {
     if (loggedIn) {
@@ -40,17 +41,10 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
-    movieApi
-      .getMovies()
-      .then((res) => {
-        setMovies(res)
-      })
-      .catch((err) => {
-        console.log('Не удалось получить фильмы');
-      });
-  }, []);
-
+  // useEffect(() => {
+  //   searchMovies(searchMovieName);
+  // }, [searchMovieName]);
+  
   function jwtTokenCheck() {
     if (localStorage.getItem('jwt')) {
       let jwt = localStorage.getItem('jwt');
@@ -100,6 +94,7 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -114,11 +109,15 @@ function App() {
           <ProtectedRoute
             path="/movies"
             component={Movies}
-            moviesList={movies}
+            // search={setSearchMovieName}
+            // handleSearch={handleSearchMovies}
+            moviesArray={searchMoviesArray}
             loggedIn={loggedIn}
           />
           <ProtectedRoute
             path="/saved-movies"
+            // search={setSearchMovieName}
+            // handleSearch={handleSearchMovies}
             component={SavedMovies}
             loggedIn={loggedIn}
           />

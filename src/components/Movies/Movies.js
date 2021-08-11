@@ -6,13 +6,12 @@ import Footer from '../Footer/Footer';
 
 function Movies(props) {
   const savedMovies = false;
-  console.log(props.movies)
   return (
     <>
       <Header />
       <section className="section movies">
-        <SearchForm />
-        <MoviesCardList movies={props.moviesList} savedMovies={savedMovies} />
+        <SearchForm search={props.search} handleSearch={props.handleSearchMovies}/>
+        <MoviesCardList movies={props.moviesArray} savedMovies={savedMovies} />
       </section>
       <Footer />
     </>

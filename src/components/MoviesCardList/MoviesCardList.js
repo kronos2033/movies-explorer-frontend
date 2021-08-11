@@ -2,11 +2,11 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import {MOVIE_URL} from '../../utils/movieApi'
 function MoviesCardList(props) {
-  const moviesArray = Array.from(props.movies)
+  
+
   return (
     <>
-      {moviesArray.map((movie) => {
-    console.log(movie)
+      {props.movies.map((movie) => {
         return (
             <MoviesCard
               key={movie.id}
