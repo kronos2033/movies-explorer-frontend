@@ -77,7 +77,7 @@ function Register(props) {
             onChange={handleChange}
             required
           />
-          <span className=" form__text form__error-text">{nameError}</span>
+          <span className="form__text form__error-text">{nameError}</span>
           <span className="form__text register__text register__text_email">
             E-mail
           </span>
@@ -89,7 +89,7 @@ function Register(props) {
             onChange={handleChange}
             required
           />
-          <span className=" form__text form__error-text">
+          <span className="form__text form__error-text ">
             {emailValidateError}
           </span>
           <span className="form__text register__text register__text_password">
