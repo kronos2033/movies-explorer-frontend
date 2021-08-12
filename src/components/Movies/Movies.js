@@ -1,16 +1,14 @@
-import './Movies.css';
-import SearchForm from '../SearchForm/SearchForm';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import { useState } from 'react';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import SearchForm from '../SearchForm/SearchForm';
+import './Movies.css';
 
 function Movies(props) {
   const [wrongMessage, setWrongMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [searchMoviesArray, setSearchMoviesArray] = useState([]);
-  const savedMovies = false;
-
 
   return (
     <>
@@ -25,7 +23,7 @@ function Movies(props) {
           movies={searchMoviesArray}
           error={wrongMessage}
           isLoading={isLoading}
-          savedMovies={savedMovies}
+          savedMovies={false}
         />
       </section>
       <Footer />

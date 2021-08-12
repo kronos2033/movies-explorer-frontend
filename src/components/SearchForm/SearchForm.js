@@ -1,6 +1,6 @@
-import './SearchForm.css';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as movieApi from '../../utils/movieApi';
+import './SearchForm.css';
 
 function SearchForm(props) {
   const [searchParametrs, setSearchParametrs] = useState({
@@ -25,6 +25,7 @@ function SearchForm(props) {
     movieApi
       .getMoviesByName()
       .then((res) => {
+        console.log(res)
         const filteredMoviesByName = res.filter((movie) =>
           movie.nameRU.includes(name),
         );

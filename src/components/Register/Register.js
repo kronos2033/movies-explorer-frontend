@@ -1,8 +1,8 @@
-import './Register.css';
-import headerLogo from '../../images/logo.svg';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { validate } from 'react-email-validator';
+import { Link } from 'react-router-dom';
+import headerLogo from '../../images/logo.svg';
+import './Register.css';
 function Register(props) {
   const [userData, setUserData] = useState({
     name: '',

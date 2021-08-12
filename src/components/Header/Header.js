@@ -1,7 +1,7 @@
+import { Link, NavLink, Route } from 'react-router-dom';
 import headerLogo from '../../images/logo.svg';
-import { Route, Link, NavLink } from 'react-router-dom';
-
 import './Header.css';
+
 function Header(props) {
   return (
     <section

@@ -1,8 +1,8 @@
-import './MoviesCardList.css';
+import { useCallback, useState } from 'react';
+import { MOVIE_URL } from '../../utils/movieApi';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
-import { MOVIE_URL } from '../../utils/movieApi';
-import { useState, useCallback, useEffect } from 'react';
+import './MoviesCardList.css';
 
 function MoviesCardList(props) {
   let screenWidth = window.screen.width;

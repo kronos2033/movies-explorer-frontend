@@ -1,16 +1,15 @@
-import Header from '../Header/Header';
-import './Profile.css';
 import { useState } from 'react';
 import { validate } from 'react-email-validator';
+import Header from '../Header/Header';
+import './Profile.css';
 
 function Profile(props) {
-  const [userData, setUserData] = useState({ name:props.userInfo.name, email: props.userInfo.email});
-  const [emailValidateError, setEmailValidateError] = useState(
-    '',
-  );
-  const [nameError, setNameError] = useState(
-    '',
-  );
+  const [userData, setUserData] = useState({
+    name: props.userInfo.name,
+    email: props.userInfo.email,
+  });
+  const [emailValidateError, setEmailValidateError] = useState('');
+  const [nameError, setNameError] = useState('');
   function validateInput(name, value) {
     switch (name) {
       case 'name':

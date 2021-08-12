@@ -1,16 +1,16 @@
-import './App.css';
-import Main from '../Main/Main';
-import SavedMovies from '../SavedMovies/SavedMovies';
-import Movies from '../Movies/Movies';
-import Register from '../Register/Register';
-import Profile from '../Profile/Profile';
-import Login from '../Login/Login';
-import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import * as userApi from '../../utils/userApi';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import * as mainApi from '../../utils/mainApi';
+import Login from '../Login/Login';
+import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import Profile from '../Profile/Profile';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Register from '../Register/Register';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import './App.css';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
@@ -29,7 +29,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    userApi
+    mainApi
       .getUserInfo()
       .then((res) => {
         setCurrentUser(res);
@@ -44,7 +44,7 @@ function App() {
   function jwtTokenCheck() {
     if (localStorage.getItem('jwt')) {
       let jwt = localStorage.getItem('jwt');
-      userApi.getContent(jwt).then((res) => {
+      mainApi.getContent(jwt).then((res) => {
         if (res.email) {
           setLoggedIn(true);
         }
@@ -53,7 +53,7 @@ function App() {
   }
 
   function handleLogin({ email, password }) {
-    return userApi
+    return mainApi
       .autorize(email, password)
       .then((res) => {
         if (res.token) {
@@ -73,7 +73,7 @@ function App() {
     setLoggedIn(false);
   }
   function handleRegister({ name, email, password }) {
-    return userApi
+    return mainApi
       .register(name, email, password)
       .then((res) => {
         history.push('/sign-in');
@@ -84,7 +84,7 @@ function App() {
   }
   function handleUpdateProfile({ name, email }) {
     console.log(name, email);
-    userApi
+    mainApi
       .updateUserInfo(name, email)
       .then((newUserInfo) => {
         setCurrentUser({name: newUserInfo.name, email:newUserInfo.email});
@@ -124,7 +124,7 @@ function App() {
             <Main />
           </Route>
           <Route>
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/main" />}
+            {loggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/main" />}
           </Route>
           <Route path="*">
             <NotFoundPage />
