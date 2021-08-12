@@ -7,13 +7,16 @@ function SearchForm(props) {
     name: '',
     checked: false,
   });
-  const [searchValidateError, setSearchValidateError] = useState('')
+  const [searchValidateError, setSearchValidateError] = useState('');
 
   useEffect(() => {
     const initialSearchParams = JSON.parse(
       localStorage.getItem('searchParams'),
     );
-    setSearchParametrs({name:initialSearchParams.name, checked: initialSearchParams.checked})
+    setSearchParametrs({
+      name: initialSearchParams.name,
+      checked: initialSearchParams.checked,
+    });
     searchMovies(initialSearchParams.name, initialSearchParams.checked);
   }, []);
 
@@ -46,7 +49,7 @@ function SearchForm(props) {
       name: e.target.value,
       checked: searchParametrs.checked,
     });
-    validateInput(e.target.value)
+    validateInput(e.target.value);
   }
 
   function handleChangeCheckbox(e) {
@@ -56,12 +59,11 @@ function SearchForm(props) {
     });
   }
 
-  function validateInput (name) {
-    if(name.length === 0) {
-      setSearchValidateError('Поле не должно быть пустым')
-    }
-    else {
-      setSearchValidateError('')
+  function validateInput(name) {
+    if (name.length === 0) {
+      setSearchValidateError('Поле не должно быть пустым');
+    } else {
+      setSearchValidateError('');
     }
   }
 
@@ -74,20 +76,27 @@ function SearchForm(props) {
           handleSearchMovie(searchParametrs.name, searchParametrs.checked);
         }}
       >
-      <div className='search__container'>
-        <input
-          className="search__input"
-          type="input"
-          placeholder="Фильмы"
-          onChange={handleChangeInput}
-          value={searchParametrs.name}
-          min='1'
-          formNoValidate
-          required
-        />
-        <button className={searchValidateError ? 'search__button_disabled search__button':'search__button'} disabled={searchValidateError}></button>
+        <div className="search__container">
+          <input
+            className="search__input"
+            type="input"
+            placeholder="Фильмы"
+            onChange={handleChangeInput}
+            value={searchParametrs.name}
+            min="1"
+            formNoValidate
+            required
+          />
+          <button
+            className={
+              searchValidateError
+                ? 'search__button_disabled search__button'
+                : 'search__button'
+            }
+            disabled={searchValidateError}
+          ></button>
         </div>
-        <span className='form__text form__error-text search__error'>
+        <span className="form__text form__error-text search__error">
           {searchValidateError}
         </span>
       </form>

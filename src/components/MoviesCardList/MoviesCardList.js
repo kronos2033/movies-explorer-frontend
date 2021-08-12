@@ -2,16 +2,24 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import { MOVIE_URL } from '../../utils/movieApi';
-import { useState,useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+
 function MoviesCardList(props) {
-  const [maxRange, setMaxRange] = useState(3)
-  let prevRange =0
-  const loadMore = useCallback(
-    () => {
-      setMaxRange(prevRange=> prevRange + 3)
-    },
-    [],
-  )
+  let screenWidth = window.screen.width;
+  let moviedCardCounter;
+  function getScreenWidth() {
+    if (screenWidth > 321) {
+      return (moviedCardCounter = 3);
+    } else {
+      return (moviedCardCounter = 5);
+    }
+  }
+  getScreenWidth();
+  const [maxRange, setMaxRange] = useState(moviedCardCounter);
+  const loadMore = useCallback(() => {
+    setMaxRange((prevRange) => prevRange + moviedCardCounter);
+  }, []);
+
   return (
     <>
       {props.isLoading ? (
@@ -20,7 +28,7 @@ function MoviesCardList(props) {
         <>
           {props.movies.length > 0 ? (
             <>
-              {props.movies.slice(0,maxRange).map((movie) => {
+              {props.movies.slice(0, maxRange).map((movie) => {
                 return (
                   <MoviesCard
                     key={movie.id}
@@ -31,8 +39,10 @@ function MoviesCardList(props) {
                   />
                 );
               })}
-              {props.movies.length > 3 && (
-                <button className="movies-list__button" onClick={loadMore}>Ещё</button>
+              {props.movies.length > moviedCardCounter && (
+                <button className="movies-list__button" onClick={loadMore}>
+                  Ещё
+                </button>
               )}
             </>
           ) : (
