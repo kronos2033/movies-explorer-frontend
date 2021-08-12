@@ -12,6 +12,8 @@ function SearchForm(props) {
     const initialSearchParams = JSON.parse(
       localStorage.getItem('searchParams'),
     );
+    console.log(initialSearchParams)
+    setSearchParametrs({name:initialSearchParams.name, checked: initialSearchParams.checked})
     searchMovies(initialSearchParams.name, initialSearchParams.checked);
   }, []);
 
@@ -67,6 +69,7 @@ function SearchForm(props) {
           type="input"
           placeholder="Фильмы"
           onChange={handleChangeInput}
+          value={searchParametrs.name}
           required
         ></input>
         <button className="search__button"></button>
