@@ -87,7 +87,7 @@ function App() {
     userApi
       .updateUserInfo(name, email)
       .then((newUserInfo) => {
-        setCurrentUser(newUserInfo);
+        setCurrentUser({name: newUserInfo.name, email:newUserInfo.email});
       })
       .catch((err) => console.log(err));
   }
@@ -99,6 +99,7 @@ function App() {
           <ProtectedRoute
             path="/profile"
             component={Profile}
+            userInfo={currentUser}
             loggedIn={loggedIn}
             onUpdate={handleUpdateProfile}
             onLogout={handleLogout}

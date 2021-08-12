@@ -4,14 +4,13 @@ import { useState } from 'react';
 import { validate } from 'react-email-validator';
 
 function Profile(props) {
-  const [userData, setUserData] = useState({ name: '', email: '' });
+  const [userData, setUserData] = useState({ name:props.userInfo.name, email: props.userInfo.email});
   const [emailValidateError, setEmailValidateError] = useState(
-    'Введите валидный email',
+    '',
   );
   const [nameError, setNameError] = useState(
-    'Имя должно содержать минимум 3 символа',
+    '',
   );
-
   function validateInput(name, value) {
     switch (name) {
       case 'name':
@@ -56,6 +55,7 @@ function Profile(props) {
               placeholder="Имя"
               name="name"
               min="3"
+              value={userData.name}
               onChange={handleChange}
             />
           </div>
@@ -67,6 +67,7 @@ function Profile(props) {
               className="profile__input profile__input_email"
               placeholder="E-mail"
               name="email"
+              value={userData.email}
               onChange={handleChange}
             />
           </div>
