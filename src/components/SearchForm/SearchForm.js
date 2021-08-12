@@ -8,50 +8,35 @@ function SearchForm(props) {
     checked: false,
   });
 
-useEffect(() => {
-  const initialSearchParams = JSON.parse(localStorage.getItem('searchParams'));
-  handleSearchMovies(initialSearchParams.name, initialSearchParams.checked)
-},[])
-  // useEffect((e) => {
-  //   props.setLoading(true);
-  //   movieApi
-  //     .getMoviesByName()
-  //     .then((res) => {
-  //       const filteredMovies = res.filter((movie) =>
-  //         movie.nameRU.includes(initialSearchParams.name),
-  //       );
-  //       props.search(filteredMovies);
-  //       props.setLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log('Ошибка при попытке получить массив фильмов:', err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const initialSearchParams = JSON.parse(
+      localStorage.getItem('searchParams'),
+    );
+    searchMovies(initialSearchParams.name, initialSearchParams.checked);
+  }, []);
 
-  function handleSearchMovies(name, checked) {
+  function searchMovies(name, checked) {
     props.setLoading(true);
-
     movieApi
       .getMoviesByName()
       .then((res) => {
         const filteredMoviesByName = res.filter((movie) =>
           movie.nameRU.includes(name),
         );
-        let filteredMovies;
-        if (checked) {
-          filteredMovies = filteredMoviesByName.filter(
-            (movie) => movie.duration < 40,
-          );
-        } else {
-          filteredMovies = filteredMoviesByName;
-        }
+        let filteredMovies = checked
+          ? filteredMoviesByName.filter((movie) => movie.duration < 40)
+          : filteredMoviesByName;
         props.search(filteredMovies);
-        localStorage.setItem('searchParams', JSON.stringify(searchParametrs));
         props.setLoading(false);
       })
       .catch((err) => {
         console.log('Ошибка при попытке получить массив фильмов:', err);
       });
+  }
+
+  function handleSearchMovie(name, checked) {
+    searchMovies(name, checked);
+    localStorage.setItem('searchParams', JSON.stringify(searchParametrs));
   }
 
   function handleChangeInput(e) {
@@ -72,11 +57,10 @@ useEffect(() => {
     <section className="search  section section_type_narrow">
       <form
         className="search__form"
-        onSubmit={(e) =>{
+        onSubmit={(e) => {
           e.preventDefault();
-          handleSearchMovies(searchParametrs.name, searchParametrs.checked)
-        }
-        }
+          handleSearchMovie(searchParametrs.name, searchParametrs.checked);
+        }}
       >
         <input
           className="search__input"
