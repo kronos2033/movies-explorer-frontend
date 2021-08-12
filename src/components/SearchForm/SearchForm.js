@@ -12,7 +12,6 @@ function SearchForm(props) {
     const initialSearchParams = JSON.parse(
       localStorage.getItem('searchParams'),
     );
-    console.log(initialSearchParams)
     setSearchParametrs({name:initialSearchParams.name, checked: initialSearchParams.checked})
     searchMovies(initialSearchParams.name, initialSearchParams.checked);
   }, []);
@@ -25,10 +24,10 @@ function SearchForm(props) {
         const filteredMoviesByName = res.filter((movie) =>
           movie.nameRU.includes(name),
         );
-        let filteredMovies = checked
+        const filteredMovies = checked
           ? filteredMoviesByName.filter((movie) => movie.duration < 40)
           : filteredMoviesByName;
-        props.search(filteredMovies);
+        props.setMovieArray(filteredMovies);
         props.setLoading(false);
       })
       .catch((err) => {

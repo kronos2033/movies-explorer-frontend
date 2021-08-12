@@ -15,7 +15,7 @@ import { useState, useEffect } from 'react';
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [loggedIn, setLoggedIn] = useState(false);
-  const [searchMoviesArray, setSearchMoviesArray] = useState([]);
+  
   
   const history = useHistory();
   useEffect(() => {
@@ -68,6 +68,7 @@ function App() {
   }
   function handleLogout() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('searchParams')
     history.push('/signin');
     setLoggedIn(false);
   }
@@ -104,17 +105,11 @@ function App() {
           />
           <ProtectedRoute
             path="/movies"
-            component={Movies}
-            // search={setSearchMovieName}
-            // handleSearch={handleSearchMovies}
-            search = {setSearchMoviesArray}
-            moviesArray={searchMoviesArray}
+            component={Movies} 
             loggedIn={loggedIn}
           />
           <ProtectedRoute
             path="/saved-movies"
-            // search={setSearchMovieName}
-            // handleSearch={handleSearchMovies}
             component={SavedMovies}
             loggedIn={loggedIn}
           />
