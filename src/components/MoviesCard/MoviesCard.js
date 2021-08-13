@@ -11,7 +11,8 @@ function MoviesCard(props) {
       return hours + 'ч ' + minutes + 'мин';
     }
   }
-  function handleLike() {
+  function handleLike(e) {
+    e.preventDefault();
     isLiked && props.handleLike(props.movie);
     setIsLiked(!isLiked);
   }
