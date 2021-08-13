@@ -1,16 +1,14 @@
-import { useState, useEffect } from 'react';
-import * as mainApi from '../../utils/mainApi';
+import { useState } from 'react';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
-
 import './SavedMovies.css';
+
 function SavedMovies(props) {
-  const [searchMoviesArray, setSearchMoviesArray] = useState([]);
   return (
     <>
-      <Header />
+      <Header loggedIn={props.loggedIn} />
       <section className="saved-movies section">
         <SearchForm
           errMessage={props.errMessage}

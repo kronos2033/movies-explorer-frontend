@@ -1,33 +1,32 @@
-import { useState } from "react";
-import { validate } from "react-email-validator";
-import { Link } from "react-router-dom";
-import headerLogo from "../../images/logo.svg";
-import "./Login.css";
-
+import { useState } from 'react';
+import { validate } from 'react-email-validator';
+import { Link } from 'react-router-dom';
+import headerLogo from '../../images/logo.svg';
+import './Login.css';
 
 function Login(props) {
   const [userData, setUserData] = useState({ email: '', password: '' });
   const [emailValidateError, setEmailValidateError] = useState(
-    "Введите валидный email"
+    'Введите валидный email',
   );
   const [passwordError, setPasswordError] = useState(
-    "Пароль должен содержать минимум 3 символа"
+    'Пароль должен содержать минимум 3 символа',
   );
 
   function validateInput(name, value) {
     switch (name) {
-      case "password":
-        if (value.length < 3 && name === "password") {
-          setPasswordError("Пароль должен содержать минимум 3 символа");
+      case 'password':
+        if (value.length < 3 && name === 'password') {
+          setPasswordError('Пароль должен содержать минимум 3 символа');
         } else {
-          setPasswordError("");
+          setPasswordError('');
         }
         break;
-      case "email":
-        if (!validate(value) && name === "email") {
-          setEmailValidateError("Введите верный email");
+      case 'email':
+        if (!validate(value) && name === 'email') {
+          setEmailValidateError('Введите верный email');
         } else {
-          setEmailValidateError("");
+          setEmailValidateError('');
         }
         break;
       default:
@@ -45,7 +44,7 @@ function Login(props) {
     e.preventDefault();
     props.onLogin(userData);
   }
-  
+
   return (
     <section className="section section_type_narrow">
       <div className="login sign">
@@ -79,12 +78,16 @@ function Login(props) {
             required
           />
           <span className=" form__text form__error-text">{passwordError}</span>
-          
-          <button className={
+
+          <button
+            className={
               emailValidateError || passwordError
-                ? "form__btn form__btn_disabled"
-                : "form__btn"
-            }>Войти</button>
+                ? 'form__btn form__btn_disabled'
+                : 'form__btn'
+            }
+          >
+            Войти
+          </button>
         </form>
       </div>
       <div className="login__container sign__container">

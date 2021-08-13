@@ -8,11 +8,15 @@ import Promo from '../Promo/Promo';
 import Technologies from '../Technologies/Technologies';
 import './Main.css';
 
-function Main() {
+function Main(props) {
   const isMain = true;
   return (
-    <section className='section main'>
-      <Header backgroundColor={isMain ? '#F3C1F8' : '#fff'} isMain={isMain} />
+    <section className="section main">
+      <Header
+        backgroundColor={isMain ? '#F3C1F8' : '#fff'}
+        isMain={isMain}
+        loggedIn={props.loggedIn}
+      />
       <Promo />
       <Navbar />
       <AboutProject />

@@ -42,7 +42,7 @@ function Profile(props) {
   };
   return (
     <>
-      <Header />
+      <Header loggedIn={props.loggedIn} />
       <section className="profile">
         <h2 className="profile__title">Привет, Александр!</h2>
         <form className="profile__form">

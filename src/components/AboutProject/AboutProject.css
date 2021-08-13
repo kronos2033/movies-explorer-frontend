@@ -10,7 +10,7 @@
 .about__diplom-container {
   margin-top: 70px;
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   justify-content: space-between;
   gap: 20px;
 }
@@ -67,7 +67,7 @@
   }
 }
 
-@media (max-width:572px) {
+@media (max-width: 572px) {
   .about__diplom-container {
     grid-template-columns: 1fr;
   }

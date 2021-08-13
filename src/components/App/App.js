@@ -18,13 +18,12 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchValidateError, setSearchValidateError] = useState('');
-  const [movieArray, setMovieArray] = useState([])
-  const [savedMovieArray, setSavedMovieArray] = useState([])
+  const [movieArray, setMovieArray] = useState([]);
+  const [savedMovieArray, setSavedMovieArray] = useState([]);
   const [searchParametrs, setSearchParametrs] = useState({
     name: '',
     checked: false,
   });
-  
 
   const history = useHistory();
   useEffect(() => {
@@ -49,17 +48,21 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if(localStorage.getItem('searchParams')) {
-    const initialSearchParams = JSON.parse(
-      localStorage.getItem('searchParams'),
-    );
-    setSearchParametrs({
-      name: initialSearchParams.name,
-      checked: initialSearchParams.checked,
-    });
-    handleSearchMovies(initialSearchParams.name, initialSearchParams.checked);
-    handleSearchSavedMovies(initialSearchParams.name, initialSearchParams.checked);
-  }},[]);
+    if (localStorage.getItem('searchParams')) {
+      const initialSearchParams = JSON.parse(
+        localStorage.getItem('searchParams'),
+      );
+      setSearchParametrs({
+        name: initialSearchParams.name,
+        checked: initialSearchParams.checked,
+      });
+      handleSearchMovies(initialSearchParams.name, initialSearchParams.checked);
+      handleSearchSavedMovies(
+        initialSearchParams.name,
+        initialSearchParams.checked,
+      );
+    }
+  }, []);
 
   function getSavedMoviesArray() {
     mainApi.getSavedMovies().then((res) => setSavedMovieArray(res));
@@ -109,15 +112,16 @@ function App() {
 
   function handleSearchMovies(name, checked) {
     setIsLoading(true);
-    movieApi.getMovies()
-    .then((res) => {
+    movieApi
+      .getMovies()
+      .then((res) => {
         const filteredMoviesByName = res.filter((movie) =>
           movie.nameRU.includes(name),
         );
         const filteredMovies = checked
           ? filteredMoviesByName.filter((movie) => movie.duration < 40)
           : filteredMoviesByName;
-          setMovieArray(filteredMovies);
+        setMovieArray(filteredMovies);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -127,15 +131,16 @@ function App() {
 
   function handleSearchSavedMovies(name, checked) {
     setIsLoading(true);
-    mainApi.getSavedMovies()
-    .then((res) => {
+    mainApi
+      .getSavedMovies()
+      .then((res) => {
         const filteredMoviesByName = res.filter((movie) =>
-          movie.nameRU.includes(name)
+          movie.nameRU.includes(name),
         );
         const filteredMovies = checked
           ? filteredMoviesByName.filter((movie) => movie.duration < 40)
           : filteredMoviesByName;
-          setSavedMovieArray(filteredMovies);
+        setSavedMovieArray(filteredMovies);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -163,7 +168,7 @@ function App() {
     id,
     nameRU,
     nameEN,
-  }){
+  }) {
     mainApi
       .likeMovies({
         country,
@@ -178,8 +183,7 @@ function App() {
         nameRU,
         nameEN,
       })
-      .then((res) => {
-      });
+      .then((res) => {});
   }
 
   function handleDeleteMovie(id) {
@@ -215,7 +219,7 @@ function App() {
             path="/saved-movies"
             loggedIn={loggedIn}
             component={SavedMovies}
-            isLoading={isLoading}   
+            isLoading={isLoading}
             errMessage={searchValidateError}
             hendleDelete={handleDeleteMovie}
             handleSearch={handleSearchSavedMovies}
@@ -231,14 +235,10 @@ function App() {
             <Register onRegister={handleRegister} />
           </Route>
           <Route path="/main">
-            <Main />
+            <Main loggedIn={loggedIn} />
           </Route>
           <Route>
-            {loggedIn ? (
-              <Redirect to="/movies" />
-            ) : (
-              <Redirect to="/main" />
-            )}
+            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/main" />}
           </Route>
           <Route path="*">
             <NotFoundPage />

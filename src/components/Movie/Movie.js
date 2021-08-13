@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import * as movieApi from '../../utils/movieApi';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
-import * as movieApi from '../../utils/movieApi'
 import './Movies.css';
 
 function Movies(props) {
@@ -12,11 +11,11 @@ function Movies(props) {
       <Header />
       <section className="section section_type_narrow movies">
         <SearchForm
-          errMessage = {props.errMessage}
+          errMessage={props.errMessage}
           handleSearch={props.handleSearch}
           searchParametrs={props.searchParametrs}
           setSearchParametrs={props.setSearchParametrs}
-          setErrMessage = {props.setErrMessage}
+          setErrMessage={props.setErrMessage}
           api={movieApi.getMovies}
         />
         <MoviesCardList

@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import * as movieApi from '../../utils/movieApi';
 import './SearchForm.css';
 
 function SearchForm(props) {
