@@ -9,7 +9,7 @@ function Movies(props) {
   const [wrongMessage, setWrongMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [searchMoviesArray, setSearchMoviesArray] = useState([]);
-
+  
   return (
     <>
       <Header />

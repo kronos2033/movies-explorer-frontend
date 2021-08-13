@@ -91,7 +91,7 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-
+  
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -106,13 +106,13 @@ function App() {
           />
           <ProtectedRoute
             path="/movies"
-            component={Movies} 
             loggedIn={loggedIn}
+            component={Movies} 
           />
           <ProtectedRoute
             path="/saved-movies"
-            component={SavedMovies}
             loggedIn={loggedIn}
+            component={SavedMovies}
           />
           <Route path="/sign-in">
             <Login onLogin={handleLogin} />

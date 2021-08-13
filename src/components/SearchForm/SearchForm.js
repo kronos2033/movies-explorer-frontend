@@ -25,7 +25,6 @@ function SearchForm(props) {
     movieApi
       .getMoviesByName()
       .then((res) => {
-        console.log(res)
         const filteredMoviesByName = res.filter((movie) =>
           movie.nameRU.includes(name),
         );

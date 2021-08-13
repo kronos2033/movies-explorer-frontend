@@ -11,6 +11,14 @@ function MoviesCard(props) {
     }
   }
 
+
+  function handleLike () {
+    props.handleLike(props.movie)
+  }
+
+  function handleDelete() {
+    props.handleDelete(props.movie.id)
+  }
   return (
     <section className="movie section section_type_narrow">
       <div className="movie__info">
@@ -19,9 +27,9 @@ function MoviesCard(props) {
           {getTimeFromMins(props.movieDuration)}
         </p>
         {props.savedMovies ? (
-          <button className="movie__delete"/>
+          <button className="movie__delete" onClick={handleDelete}/>
         ) : (
-          <button className="movie__like"/>
+          <button className="movie__like" onClick={handleLike}/>
         )}
       </div>
       <img className="movie__image" src={props.movieImage} alt="movie poster" />

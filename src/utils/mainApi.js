@@ -1,4 +1,4 @@
-const BASE_URL = 'http://api.movie.diplom.nomoredomains.club/';
+export const BASE_URL = 'http://api.movie.diplom.nomoredomains.club/';
 const checkResponse = (res) =>
   res.ok ? res.json() : Promise.reject(`Ошибка: ${res.statusText}`);
 
@@ -66,7 +66,7 @@ export const getSavedMovies = () => {
   }).then(checkResponse);
 };
 
-export const likeMovies = (
+export const likeMovies = ({
   country,
   director,
   duration,
@@ -78,8 +78,9 @@ export const likeMovies = (
   movieId,
   nameRU,
   nameEN,
-) => {
+}) => {
   return fetch(`${BASE_URL}movies`, {
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'content-Type': 'application/json',
@@ -103,6 +104,7 @@ export const likeMovies = (
 
 export const deleteMovie = (id) => {
   return fetch(`${BASE_URL}movies/id`, {
+    method: 'PUT',
     headers: {
       Accept: 'application/json',
       'content-Type': 'application/json',
