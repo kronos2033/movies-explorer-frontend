@@ -36,9 +36,9 @@ function MoviesCardList(props) {
       duration,
       year,
       description,
-      image:`${mainApi.BASE_URL}image.url`,
+      image:`${MOVIE_URL}${image.url}`,
       ['trailer']: trailerLink,
-      ['thumbnail']:`${mainApi.BASE_URL}image.url`,
+      ['thumbnail']:`${MOVIE_URL}${image.url}`,
       ['movieId']:id,
       nameRU,
       nameEN})
@@ -46,7 +46,6 @@ function MoviesCardList(props) {
       console.log(res)
     })
   }
-
   function handleDeleteMovie (id) {
     mainApi.deleteMovie(id) 
 .then((res)=> console.log(res))
@@ -61,13 +60,12 @@ function MoviesCardList(props) {
           {props.movies.length > 0 ? (
             <>
               {props.movies.slice(0, maxRange).map((movie) => {
-                console.log(movie)
                 return (
                   <MoviesCard
                     key={movie.id}
                     movieName={movie.nameRU}
                     movieDuration={movie.duration}
-                    movieImage={`${MOVIE_URL}${movie.image.url}`}
+                    movieImage={props.savedMovies ? movie.image : `${MOVIE_URL}${movie.image.url}`}
                     savedMovies={props.savedMovies}
                     movie={movie}
                     handleLike={handleLikeMovie}

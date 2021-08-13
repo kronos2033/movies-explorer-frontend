@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as mainApi from '../../utils/mainApi';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -10,13 +10,13 @@ function SavedMovies(props) {
   const [wrongMessage, setWrongMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [searchMoviesArray, setSearchMoviesArray] = useState([]);
-  let savedMoviesArray = []
-  function getSavedMovie () {
+  const [savedMoviesArray, setSavedMoviesArray] = useState([])
+  
+  useEffect(() => {
     mainApi.getSavedMovies()
-    .then((res)=>savedMoviesArray = res)
-  }
-
-  getSavedMovie()
+    .then((res)=>setSavedMoviesArray(res))
+  }, [])
+ console.log(savedMoviesArray)
   return (
     <>
     <Header/>

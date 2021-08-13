@@ -1,9 +1,9 @@
-export const BASE_URL = 'http://api.movie.diplom.nomoredomains.club/';
+export const BASE_URL = 'http://api.movie.diplom.nomoredomains.club';
 const checkResponse = (res) =>
   res.ok ? res.json() : Promise.reject(`Ошибка: ${res.statusText}`);
 
 export const autorize = (email, password) => {
-  return fetch(`${BASE_URL}signin`, {
+  return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -14,7 +14,7 @@ export const autorize = (email, password) => {
 };
 
 export const register = (name, email, password) => {
-  return fetch(`${BASE_URL}signup`, {
+  return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -25,7 +25,7 @@ export const register = (name, email, password) => {
 };
 
 export const getContent = () => {
-  return fetch(`${BASE_URL}users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export const getContent = () => {
 };
 
 export const getUserInfo = () => {
-  return fetch(`${BASE_URL}users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const getUserInfo = () => {
 };
 
 export const updateUserInfo = (name, email) => {
-  return fetch(`${BASE_URL}users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: {
       Accept: 'application/json',
@@ -57,7 +57,7 @@ export const updateUserInfo = (name, email) => {
 };
 
 export const getSavedMovies = () => {
-  return fetch(`${BASE_URL}movies`, {
+  return fetch(`${BASE_URL}/movies`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ export const likeMovies = ({
   nameRU,
   nameEN,
 }) => {
-  return fetch(`${BASE_URL}movies`, {
+  return fetch(`${BASE_URL}/movies`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -102,16 +102,16 @@ export const likeMovies = ({
   }).then(checkResponse);
 };
 
-export const deleteMovie = (id) => {
-  return fetch(`${BASE_URL}movies/id`, {
-    method: 'PUT',
+export const deleteMovie = (_id) => {
+  return fetch(`${BASE_URL}/movies/${_id}`, {
+    method: 'DELETE',
     headers: {
       Accept: 'application/json',
       'content-Type': 'application/json',
       authorization: `Bearer ${localStorage.getItem('jwt')}`,
     },
     body: JSON.stringify({
-      id,
+      _id,
     }),
   }).then(checkResponse);
 };

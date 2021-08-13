@@ -10,14 +10,11 @@ function MoviesCard(props) {
       return hours + 'ч ' + minutes + 'мин';
     }
   }
-
-
   function handleLike () {
     props.handleLike(props.movie)
   }
-
   function handleDelete() {
-    props.handleDelete(props.movie.id)
+    props.handleDelete(props.movie._id)
   }
   return (
     <section className="movie section section_type_narrow">
