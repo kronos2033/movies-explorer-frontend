@@ -8,7 +8,6 @@ import './Movies.css';
 
 function Movies(props) {
   
-  // const [searchMoviesArray, setSearchMoviesArray] = useState([]);
   return (
     <>
       <Header />

@@ -1,6 +1,8 @@
 import './MoviesCard.css';
-
+import { useState } from 'react';
 function MoviesCard(props) {
+  
+  const [isLiked, setIsLiked] = useState(false)
   function getTimeFromMins(mins) {
     let hours = Math.trunc(mins / 60);
     let minutes = mins % 60;
@@ -11,9 +13,11 @@ function MoviesCard(props) {
     }
   }
   function handleLike () {
+    setIsLiked(true)
     props.handleLike(props.movie)
   }
   function handleDelete() {
+    setIsLiked(false)
     props.handleDelete(props.movie._id)
   }
   return (
@@ -26,7 +30,7 @@ function MoviesCard(props) {
         {props.savedMovies ? (
           <button className="movie__delete" onClick={handleDelete}/>
         ) : (
-          <button className="movie__like" onClick={handleLike}/>
+          <button className={isLiked? "movie__like_active movie__like" : "movie__like"} onClick={!isLiked && handleLike}/>
         )}
       </div>
       <img className="movie__image" src={props.movieImage} alt="movie poster" />

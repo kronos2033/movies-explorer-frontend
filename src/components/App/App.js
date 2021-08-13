@@ -18,13 +18,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchValidateError, setSearchValidateError] = useState('');
-  // const [movieArray, setMovieArray] = useState([])
-  // const [savedMoviesArray, setSavedMoviesArray] = useState([]);
-  // const [searchMoviesArray, setSearchMoviesArray] = useState([]);
-
-  
   const [movieArray, setMovieArray] = useState([])
-  
   const [savedMovieArray, setSavedMovieArray] = useState([])
   const [searchParametrs, setSearchParametrs] = useState({
     name: '',
@@ -138,7 +132,6 @@ function App() {
         const filteredMoviesByName = res.filter((movie) =>
           movie.nameRU.includes(name)
         );
-        console.log(filteredMoviesByName)
         const filteredMovies = checked
           ? filteredMoviesByName.filter((movie) => movie.duration < 40)
           : filteredMoviesByName;
@@ -186,7 +179,6 @@ function App() {
         nameEN,
       })
       .then((res) => {
-        console.log(res);
       });
   }
 
@@ -211,7 +203,6 @@ function App() {
             loggedIn={loggedIn}
             component={Movies}
             isLoading={isLoading}
-            
             moviesArray={movieArray}
             errMessage={searchValidateError}
             handleLike={handleLikeMovie}
@@ -224,8 +215,7 @@ function App() {
             path="/saved-movies"
             loggedIn={loggedIn}
             component={SavedMovies}
-            isLoading={isLoading}
-            
+            isLoading={isLoading}   
             errMessage={searchValidateError}
             hendleDelete={handleDeleteMovie}
             handleSearch={handleSearchSavedMovies}
@@ -245,7 +235,7 @@ function App() {
           </Route>
           <Route>
             {loggedIn ? (
-              <Redirect to="/saved-movies" />
+              <Redirect to="/movies" />
             ) : (
               <Redirect to="/main" />
             )}

@@ -2,17 +2,15 @@ import { useCallback, useState, useEffect } from 'react';
 import { MOVIE_URL } from '../../utils/movieApi';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
-import * as mainApi from '../../utils/mainApi';
 import './MoviesCardList.css';
 
 function MoviesCardList(props) {
   let screenWidth = window.screen.width;
   let moviedCardCounter;
   
+  
 useEffect(() => {
-  getScreenWidth();
-  
-  
+  getScreenWidth();  
   }, []);
   
   function getScreenWidth() {
@@ -27,8 +25,6 @@ useEffect(() => {
   const loadMore = useCallback(() => {
     setMaxRange((prevRange) => prevRange + moviedCardCounter);
   }, []);
-
-
   return (
     <>
       {props.isLoading ? (
