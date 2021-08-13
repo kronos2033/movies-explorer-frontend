@@ -7,7 +7,6 @@ function SearchForm(props) {
     name: '',
     checked: false,
   });
-  // const [searchValidateError, setSearchValidateError] = useState('');
 
   useEffect(() => {
     const initialSearchParams = JSON.parse(

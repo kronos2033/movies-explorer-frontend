@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as mainApi from '../../utils/mainApi';
+import { MOVIE_URL } from '../../utils/movieApi';
 import * as movieApi from '../../utils/movieApi'
 import Login from '../Login/Login';
 import Main from '../Main/Main';
@@ -93,7 +94,36 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleLikeMovie({country ,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    id,
+    nameRU,
+    nameEN}) {
+    mainApi.likeMovies({country,
+      director,
+      duration,
+      year,
+      description,
+      image:`${MOVIE_URL}${image.url}`,
+      ['trailer']: trailerLink,
+      ['thumbnail']:`${MOVIE_URL}${image.url}`,
+      ['movieId']:id,
+      nameRU,
+      nameEN})
+    .then((res) => { 
+      console.log(res)
+    })
+  }
   
+  function handleDeleteMovie (id) {
+    mainApi.deleteMovie(id) 
+.then((res)=> console.log(res))
+  }
   
   return (
     <>
@@ -114,6 +144,7 @@ function App() {
             isLoading={isLoading}
             setLoading={setIsLoading}
             errMessage = {searchValidateError}
+            handleLike={handleLikeMovie}
             setErrMessage = {setSearchValidateError}
 
           />
@@ -124,6 +155,7 @@ function App() {
             isLoading={isLoading}
             setLoading={setIsLoading}
             errMessage = {searchValidateError}
+            hendleDelete={handleDeleteMovie}
             setErrMessage = {setSearchValidateError}
 
           />

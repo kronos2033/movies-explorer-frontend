@@ -27,6 +27,7 @@ function SavedMovies(props) {
         <MoviesCardList
           movies={savedMoviesArray}
           isLoading={props.isLoading}
+          handleDelete={props.hendleDelete}
           savedMovies
         />
       </section>

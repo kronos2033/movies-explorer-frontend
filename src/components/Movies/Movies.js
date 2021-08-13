@@ -20,8 +20,8 @@ function Movies(props) {
         />
         <MoviesCardList
           movies={searchMoviesArray}
-          
           isLoading={props.isLoading}
+          handleLike={props.handleLike}
           savedMovies={false}
         />
       </section>

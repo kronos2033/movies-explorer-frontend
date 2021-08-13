@@ -21,36 +21,6 @@ function MoviesCardList(props) {
     setMaxRange((prevRange) => prevRange + moviedCardCounter);
   }, []);
 
-  function handleLikeMovie({country ,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    id,
-    nameRU,
-    nameEN}) {
-    mainApi.likeMovies({country,
-      director,
-      duration,
-      year,
-      description,
-      image:`${MOVIE_URL}${image.url}`,
-      ['trailer']: trailerLink,
-      ['thumbnail']:`${MOVIE_URL}${image.url}`,
-      ['movieId']:id,
-      nameRU,
-      nameEN})
-    .then((res) => { 
-      console.log(res)
-    })
-  }
-  function handleDeleteMovie (id) {
-    mainApi.deleteMovie(id) 
-.then((res)=> console.log(res))
-  }
-
   return (
     <>
       {props.isLoading ? (
@@ -68,8 +38,8 @@ function MoviesCardList(props) {
                     movieImage={props.savedMovies ? movie.image : `${MOVIE_URL}${movie.image.url}`}
                     savedMovies={props.savedMovies}
                     movie={movie}
-                    handleLike={handleLikeMovie}
-                    handleDelete={handleDeleteMovie}
+                    handleLike={props.handleLike}
+                    handleDelete={props.handleDelete}
                   />
                 );
               })}
