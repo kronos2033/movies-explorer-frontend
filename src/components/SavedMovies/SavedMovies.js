@@ -8,12 +8,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import './SavedMovies.css';
 function SavedMovies(props) {
   const [searchMoviesArray, setSearchMoviesArray] = useState([]);
-  const [savedMoviesArray, setSavedMoviesArray] = useState([]);
-
-  useEffect(() => {
-    mainApi.getSavedMovies().then((res) => setSavedMoviesArray(res));
-  }, []);
-  console.log(savedMoviesArray);
+  // const savedMovies = true
   return (
     <>
       <Header />
@@ -25,9 +20,10 @@ function SavedMovies(props) {
           setErrMessage={props.setErrMessage}
         />
         <MoviesCardList
-          movies={savedMoviesArray}
+          movies={props.savedMoviesArray}
           isLoading={props.isLoading}
           handleDelete={props.hendleDelete}
+          getSavedMoviesArray={props.getSavedMoviesArray}
           savedMovies
         />
       </section>

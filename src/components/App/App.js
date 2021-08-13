@@ -3,7 +3,7 @@ import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as mainApi from '../../utils/mainApi';
 import { MOVIE_URL } from '../../utils/movieApi';
-import * as movieApi from '../../utils/movieApi'
+import * as movieApi from '../../utils/movieApi';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -19,6 +19,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchValidateError, setSearchValidateError] = useState('');
+  const [savedMoviesArray, setSavedMoviesArray] = useState([]);
+
   const history = useHistory();
   useEffect(() => {
     if (loggedIn) {
@@ -28,6 +30,10 @@ function App() {
 
   useEffect(() => {
     jwtTokenCheck();
+  }, []);
+
+  useEffect(() => {
+    getSavedMoviesArray();
   }, []);
 
   useEffect(() => {
@@ -41,8 +47,10 @@ function App() {
       });
   }, []);
 
-  
-    
+  function getSavedMoviesArray() {
+    mainApi.getSavedMovies().then((res) => setSavedMoviesArray(res));
+  }
+
   function jwtTokenCheck() {
     if (localStorage.getItem('jwt')) {
       let jwt = localStorage.getItem('jwt');
@@ -70,7 +78,7 @@ function App() {
   }
   function handleLogout() {
     localStorage.removeItem('jwt');
-    localStorage.removeItem('searchParams')
+    localStorage.removeItem('searchParams');
     history.push('/signin');
     setLoggedIn(false);
   }
@@ -89,12 +97,13 @@ function App() {
     mainApi
       .updateUserInfo(name, email)
       .then((newUserInfo) => {
-        setCurrentUser({name: newUserInfo.name, email:newUserInfo.email});
+        setCurrentUser({ name: newUserInfo.name, email: newUserInfo.email });
       })
       .catch((err) => console.log(err));
   }
 
-  function handleLikeMovie({country ,
+  function handleLikeMovie({
+    country,
     director,
     duration,
     year,
@@ -103,28 +112,31 @@ function App() {
     trailerLink,
     id,
     nameRU,
-    nameEN}) {
-    mainApi.likeMovies({country,
-      director,
-      duration,
-      year,
-      description,
-      image:`${MOVIE_URL}${image.url}`,
-      ['trailer']: trailerLink,
-      ['thumbnail']:`${MOVIE_URL}${image.url}`,
-      ['movieId']:id,
-      nameRU,
-      nameEN})
-    .then((res) => { 
-      console.log(res)
-    })
+    nameEN,
+  }){
+    mainApi
+      .likeMovies({
+        country,
+        director,
+        duration,
+        year,
+        description,
+        image: `${MOVIE_URL}${image.url}`,
+        ['trailer']: trailerLink,
+        ['thumbnail']: `${MOVIE_URL}${image.url}`,
+        ['movieId']: id,
+        nameRU,
+        nameEN,
+      })
+      .then((res) => {
+        console.log(res);
+      });
   }
-  
-  function handleDeleteMovie (id) {
-    mainApi.deleteMovie(id) 
-.then((res)=> console.log(res))
+
+  function handleDeleteMovie(id) {
+    mainApi.deleteMovie(id).then((res) => getSavedMoviesArray());
   }
-  
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -140,13 +152,12 @@ function App() {
           <ProtectedRoute
             path="/movies"
             loggedIn={loggedIn}
-            component={Movies} 
+            component={Movies}
             isLoading={isLoading}
             setLoading={setIsLoading}
-            errMessage = {searchValidateError}
+            errMessage={searchValidateError}
             handleLike={handleLikeMovie}
-            setErrMessage = {setSearchValidateError}
-
+            setErrMessage={setSearchValidateError}
           />
           <ProtectedRoute
             path="/saved-movies"
@@ -154,10 +165,10 @@ function App() {
             component={SavedMovies}
             isLoading={isLoading}
             setLoading={setIsLoading}
-            errMessage = {searchValidateError}
+            errMessage={searchValidateError}
             hendleDelete={handleDeleteMovie}
-            setErrMessage = {setSearchValidateError}
-
+            savedMoviesArray={savedMoviesArray}
+            setErrMessage={setSearchValidateError}
           />
           <Route path="/sign-in">
             <Login onLogin={handleLogin} />
@@ -169,7 +180,11 @@ function App() {
             <Main />
           </Route>
           <Route>
-            {loggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/main" />}
+            {loggedIn ? (
+              <Redirect to="/saved-movies" />
+            ) : (
+              <Redirect to="/main" />
+            )}
           </Route>
           <Route path="*">
             <NotFoundPage />

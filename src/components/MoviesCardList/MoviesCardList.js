@@ -1,13 +1,20 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { MOVIE_URL } from '../../utils/movieApi';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
-import * as mainApi from '../../utils/mainApi'
+import * as mainApi from '../../utils/mainApi';
 import './MoviesCardList.css';
 
 function MoviesCardList(props) {
   let screenWidth = window.screen.width;
   let moviedCardCounter;
+  
+useEffect(() => {
+  getScreenWidth();
+  
+  
+  }, []);
+  
   function getScreenWidth() {
     if (screenWidth > 321) {
       return (moviedCardCounter = 3);
@@ -21,6 +28,7 @@ function MoviesCardList(props) {
     setMaxRange((prevRange) => prevRange + moviedCardCounter);
   }, []);
 
+  
   return (
     <>
       {props.isLoading ? (
@@ -35,7 +43,11 @@ function MoviesCardList(props) {
                     key={movie.id}
                     movieName={movie.nameRU}
                     movieDuration={movie.duration}
-                    movieImage={props.savedMovies ? movie.image : `${MOVIE_URL}${movie.image.url}`}
+                    movieImage={
+                      props.savedMovies
+                        ? movie.image
+                        : `${MOVIE_URL}${movie.image.url}`
+                    }
                     savedMovies={props.savedMovies}
                     movie={movie}
                     handleLike={props.handleLike}
