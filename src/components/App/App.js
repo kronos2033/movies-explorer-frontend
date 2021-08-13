@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as mainApi from '../../utils/mainApi';
-import { MOVIE_URL } from '../../utils/movieApi';
 import * as movieApi from '../../utils/movieApi';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
@@ -19,7 +18,14 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchValidateError, setSearchValidateError] = useState('');
+  const [movieArray, setMovieArray] = useState([])
   const [savedMoviesArray, setSavedMoviesArray] = useState([]);
+  const [searchMoviesArray, setSearchMoviesArray] = useState([]);
+  const [searchParametrs, setSearchParametrs] = useState({
+    name: '',
+    checked: false,
+  });
+  
 
   const history = useHistory();
   useEffect(() => {
@@ -34,6 +40,7 @@ function App() {
 
   useEffect(() => {
     getSavedMoviesArray();
+    getMoviesArray();
   }, []);
 
   useEffect(() => {
@@ -47,8 +54,25 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    if(localStorage.getItem('searchParams')) {
+    const initialSearchParams = JSON.parse(
+      localStorage.getItem('searchParams'),
+    );
+    setSearchParametrs({
+      name: initialSearchParams.name,
+      checked: initialSearchParams.checked,
+    });
+    handleSearchMovies(initialSearchParams.name, initialSearchParams.checked);
+    handleSearchSavedMovies(initialSearchParams.name, initialSearchParams.checked);
+  }},[]);
+
   function getSavedMoviesArray() {
     mainApi.getSavedMovies().then((res) => setSavedMoviesArray(res));
+  }
+
+  function getMoviesArray () {
+    movieApi.getMovies().then((res)=>setMovieArray(res))
   }
 
   function jwtTokenCheck() {
@@ -92,6 +116,43 @@ function App() {
         console.log(`Ошибка при регистрации: ${err}`);
       });
   }
+
+  function handleSearchMovies(name, checked) {
+    setIsLoading(true);
+    movieApi.getMovies()
+    .then((res) => {
+        const filteredMoviesByName = res.filter((movie) =>
+          movie.nameRU.includes(name),
+        );
+        const filteredMovies = checked
+          ? filteredMoviesByName.filter((movie) => movie.duration < 40)
+          : filteredMoviesByName;
+          setSearchMoviesArray(filteredMovies);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log('Ошибка при попытке получить массив фильмов:', err);
+      });
+  }
+
+  function handleSearchSavedMovies(name, checked) {
+    setIsLoading(true);
+    mainApi.getSavedMovies()
+    .then((res) => {
+        const filteredMoviesByName = res.filter((movie) =>
+          movie.nameRU.includes(name)
+        );
+        console.log(filteredMoviesByName)
+        const filteredMovies = checked
+          ? filteredMoviesByName.filter((movie) => movie.duration < 40)
+          : filteredMoviesByName;
+          setSearchMoviesArray(filteredMovies);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log('Ошибка при попытке получить массив фильмов:', err);
+      });
+  }
   function handleUpdateProfile({ name, email }) {
     console.log(name, email);
     mainApi
@@ -121,9 +182,9 @@ function App() {
         duration,
         year,
         description,
-        image: `${MOVIE_URL}${image.url}`,
+        image: `${movieApi.MOVIE_URL}${image.url}`,
         ['trailer']: trailerLink,
-        ['thumbnail']: `${MOVIE_URL}${image.url}`,
+        ['thumbnail']: `${movieApi.MOVIE_URL}${image.url}`,
         ['movieId']: id,
         nameRU,
         nameEN,
@@ -154,9 +215,13 @@ function App() {
             loggedIn={loggedIn}
             component={Movies}
             isLoading={isLoading}
-            setLoading={setIsLoading}
+            
+            moviesArray={searchMoviesArray}
             errMessage={searchValidateError}
             handleLike={handleLikeMovie}
+            handleSearch={handleSearchMovies}
+            searchParametrs={searchParametrs}
+            setSearchParametrs={setSearchParametrs}
             setErrMessage={setSearchValidateError}
           />
           <ProtectedRoute
@@ -164,10 +229,13 @@ function App() {
             loggedIn={loggedIn}
             component={SavedMovies}
             isLoading={isLoading}
-            setLoading={setIsLoading}
+            
             errMessage={searchValidateError}
             hendleDelete={handleDeleteMovie}
+            handleSearch={handleSearchSavedMovies}
             savedMoviesArray={savedMoviesArray}
+            searchParametrs={searchParametrs}
+            setSearchParametrs={setSearchParametrs}
             setErrMessage={setSearchValidateError}
           />
           <Route path="/sign-in">

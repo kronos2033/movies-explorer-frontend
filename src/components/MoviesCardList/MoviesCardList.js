@@ -28,7 +28,7 @@ useEffect(() => {
     setMaxRange((prevRange) => prevRange + moviedCardCounter);
   }, []);
 
-  
+
   return (
     <>
       {props.isLoading ? (

@@ -8,15 +8,15 @@ import SearchForm from '../SearchForm/SearchForm';
 import './SavedMovies.css';
 function SavedMovies(props) {
   const [searchMoviesArray, setSearchMoviesArray] = useState([]);
-  // const savedMovies = true
   return (
     <>
       <Header />
       <section className="saved-movies section">
         <SearchForm
-          setLoading={props.setLoading}
-          setMovieArray={setSearchMoviesArray}
           errMessage={props.errMessage}
+          handleSearch={props.handleSearch}
+          searchParametrs={props.searchParametrs}
+          setSearchParametrs={props.setSearchParametrs}
           setErrMessage={props.setErrMessage}
         />
         <MoviesCardList
