@@ -18,9 +18,14 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchValidateError, setSearchValidateError] = useState('');
+  // const [movieArray, setMovieArray] = useState([])
+  // const [savedMoviesArray, setSavedMoviesArray] = useState([]);
+  // const [searchMoviesArray, setSearchMoviesArray] = useState([]);
+
+  
   const [movieArray, setMovieArray] = useState([])
-  const [savedMoviesArray, setSavedMoviesArray] = useState([]);
-  const [searchMoviesArray, setSearchMoviesArray] = useState([]);
+  
+  const [savedMovieArray, setSavedMovieArray] = useState([])
   const [searchParametrs, setSearchParametrs] = useState({
     name: '',
     checked: false,
@@ -36,11 +41,6 @@ function App() {
 
   useEffect(() => {
     jwtTokenCheck();
-  }, []);
-
-  useEffect(() => {
-    getSavedMoviesArray();
-    getMoviesArray();
   }, []);
 
   useEffect(() => {
@@ -68,11 +68,7 @@ function App() {
   }},[]);
 
   function getSavedMoviesArray() {
-    mainApi.getSavedMovies().then((res) => setSavedMoviesArray(res));
-  }
-
-  function getMoviesArray () {
-    movieApi.getMovies().then((res)=>setMovieArray(res))
+    mainApi.getSavedMovies().then((res) => setSavedMovieArray(res));
   }
 
   function jwtTokenCheck() {
@@ -127,7 +123,7 @@ function App() {
         const filteredMovies = checked
           ? filteredMoviesByName.filter((movie) => movie.duration < 40)
           : filteredMoviesByName;
-          setSearchMoviesArray(filteredMovies);
+          setMovieArray(filteredMovies);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -146,7 +142,7 @@ function App() {
         const filteredMovies = checked
           ? filteredMoviesByName.filter((movie) => movie.duration < 40)
           : filteredMoviesByName;
-          setSearchMoviesArray(filteredMovies);
+          setSavedMovieArray(filteredMovies);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -216,7 +212,7 @@ function App() {
             component={Movies}
             isLoading={isLoading}
             
-            moviesArray={searchMoviesArray}
+            moviesArray={movieArray}
             errMessage={searchValidateError}
             handleLike={handleLikeMovie}
             handleSearch={handleSearchMovies}
@@ -233,7 +229,7 @@ function App() {
             errMessage={searchValidateError}
             hendleDelete={handleDeleteMovie}
             handleSearch={handleSearchSavedMovies}
-            savedMoviesArray={savedMoviesArray}
+            savedMoviesArray={savedMovieArray}
             searchParametrs={searchParametrs}
             setSearchParametrs={setSearchParametrs}
             setErrMessage={setSearchValidateError}

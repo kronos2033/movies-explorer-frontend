@@ -11,7 +11,6 @@ function MoviesCard(props) {
     }
   }
   function handleLike () {
-    console.log(props.movie)
     props.handleLike(props.movie)
   }
   function handleDelete() {

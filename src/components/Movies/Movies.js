@@ -7,17 +7,20 @@ import * as movieApi from '../../utils/movieApi'
 import './Movies.css';
 
 function Movies(props) {
+  
+  // const [searchMoviesArray, setSearchMoviesArray] = useState([]);
   return (
     <>
       <Header />
       <section className="section section_type_narrow movies">
         <SearchForm
+          // setLoading={props.setLoading}
+          // setMovieArray={setSearchMoviesArray}
           errMessage = {props.errMessage}
           handleSearch={props.handleSearch}
           searchParametrs={props.searchParametrs}
           setSearchParametrs={props.setSearchParametrs}
           setErrMessage = {props.setErrMessage}
-          api={movieApi.getMovies}
         />
         <MoviesCardList
           movies={props.moviesArray}
