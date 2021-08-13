@@ -7,7 +7,7 @@ function SearchForm(props) {
     name: '',
     checked: false,
   });
-  const [searchValidateError, setSearchValidateError] = useState('');
+  // const [searchValidateError, setSearchValidateError] = useState('');
 
   useEffect(() => {
     const initialSearchParams = JSON.parse(
@@ -61,9 +61,9 @@ function SearchForm(props) {
 
   function validateInput(name) {
     if (name.length === 0) {
-      setSearchValidateError('Поле не должно быть пустым');
+      props.setErrMessage('Поле не должно быть пустым');
     } else {
-      setSearchValidateError('');
+      props.setErrMessage('');
     }
   }
 
@@ -89,15 +89,15 @@ function SearchForm(props) {
           />
           <button
             className={
-              searchValidateError
+              props.errMessage
                 ? 'search__button_disabled search__button'
                 : 'search__button'
             }
-            disabled={searchValidateError}
+            disabled={props.errMessage}
           ></button>
         </div>
         <span className="form__text form__error-text search__error">
-          {searchValidateError}
+          {props.errMessage}
         </span>
       </form>
       <label className="checkbox">

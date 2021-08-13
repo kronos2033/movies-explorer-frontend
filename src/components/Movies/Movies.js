@@ -15,7 +15,8 @@ function Movies(props) {
         <SearchForm
           setLoading={props.setLoading}
           setMovieArray={setSearchMoviesArray}
-          
+          errMessage = {props.errMessage}
+            setErrMessage = {props.setErrMessage}
         />
         <MoviesCardList
           movies={searchMoviesArray}

@@ -17,7 +17,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [validateSearchFormMessage, setValidateSearchFormMessage] = useState('');
+  const [searchValidateError, setSearchValidateError] = useState('');
   const history = useHistory();
   useEffect(() => {
     if (loggedIn) {
@@ -113,8 +113,8 @@ function App() {
             component={Movies} 
             isLoading={isLoading}
             setLoading={setIsLoading}
-            validateMessage = {validateSearchFormMessage}
-            setValidateMessage = {setValidateSearchFormMessage}
+            errMessage = {searchValidateError}
+            setErrMessage = {setSearchValidateError}
 
           />
           <ProtectedRoute
@@ -123,8 +123,8 @@ function App() {
             component={SavedMovies}
             isLoading={isLoading}
             setLoading={setIsLoading}
-            validateMessage = {validateSearchFormMessage}
-            setValidateMessage = {setValidateSearchFormMessage}
+            errMessage = {searchValidateError}
+            setErrMessage = {setSearchValidateError}
 
           />
           <Route path="/sign-in">

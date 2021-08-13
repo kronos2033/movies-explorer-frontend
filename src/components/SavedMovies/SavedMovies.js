@@ -7,30 +7,30 @@ import SearchForm from '../SearchForm/SearchForm';
 
 import './SavedMovies.css';
 function SavedMovies(props) {
-
   const [searchMoviesArray, setSearchMoviesArray] = useState([]);
-  const [savedMoviesArray, setSavedMoviesArray] = useState([])
-  
+  const [savedMoviesArray, setSavedMoviesArray] = useState([]);
+
   useEffect(() => {
-    mainApi.getSavedMovies()
-    .then((res)=>setSavedMoviesArray(res))
-  }, [])
- console.log(savedMoviesArray)
+    mainApi.getSavedMovies().then((res) => setSavedMoviesArray(res));
+  }, []);
+  console.log(savedMoviesArray);
   return (
     <>
-    <Header/>
-    <section className='saved-movies section'>
-    <SearchForm
+      <Header />
+      <section className="saved-movies section">
+        <SearchForm
           setLoading={props.setLoading}
           setMovieArray={setSearchMoviesArray}
+          errMessage={props.errMessage}
+          setErrMessage={props.setErrMessage}
         />
-      <MoviesCardList
+        <MoviesCardList
           movies={savedMoviesArray}
           isLoading={props.isLoading}
           savedMovies
         />
-    </section>
-    <Footer/>
+      </section>
+      <Footer />
     </>
   );
 }
