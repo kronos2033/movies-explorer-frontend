@@ -16,6 +16,7 @@ function MoviesCard(props) {
     setIsLiked(true)
     props.handleLike(props.movie)
   }
+  console.log(2)
   function handleDelete() {
     setIsLiked(false)
     props.handleDelete(props.movie._id)
