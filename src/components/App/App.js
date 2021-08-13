@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as mainApi from '../../utils/mainApi';
+import * as movieApi from '../../utils/movieApi'
 import Login from '../Login/Login';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -15,8 +16,8 @@ import './App.css';
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [loggedIn, setLoggedIn] = useState(false);
-  
-  
+  const [isLoading, setIsLoading] = useState(false);
+  const [validateSearchFormMessage, setValidateSearchFormMessage] = useState('');
   const history = useHistory();
   useEffect(() => {
     if (loggedIn) {
@@ -91,6 +92,8 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
+
+  
   
   return (
     <>
@@ -108,11 +111,21 @@ function App() {
             path="/movies"
             loggedIn={loggedIn}
             component={Movies} 
+            isLoading={isLoading}
+            setLoading={setIsLoading}
+            validateMessage = {validateSearchFormMessage}
+            setValidateMessage = {setValidateSearchFormMessage}
+
           />
           <ProtectedRoute
             path="/saved-movies"
             loggedIn={loggedIn}
             component={SavedMovies}
+            isLoading={isLoading}
+            setLoading={setIsLoading}
+            validateMessage = {validateSearchFormMessage}
+            setValidateMessage = {setValidateSearchFormMessage}
+
           />
           <Route path="/sign-in">
             <Login onLogin={handleLogin} />

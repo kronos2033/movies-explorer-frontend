@@ -7,8 +7,7 @@ import SearchForm from '../SearchForm/SearchForm';
 
 import './SavedMovies.css';
 function SavedMovies(props) {
-  const [wrongMessage, setWrongMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+
   const [searchMoviesArray, setSearchMoviesArray] = useState([]);
   const [savedMoviesArray, setSavedMoviesArray] = useState([])
   
@@ -22,14 +21,12 @@ function SavedMovies(props) {
     <Header/>
     <section className='saved-movies section'>
     <SearchForm
-          setLoading={setIsLoading}
+          setLoading={props.setLoading}
           setMovieArray={setSearchMoviesArray}
-          error={setWrongMessage}
         />
       <MoviesCardList
           movies={savedMoviesArray}
-          error={wrongMessage}
-          isLoading={isLoading}
+          isLoading={props.isLoading}
           savedMovies
         />
     </section>
