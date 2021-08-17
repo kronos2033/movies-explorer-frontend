@@ -158,7 +158,7 @@ function App() {
   }
 
   function handleLikeMovie({
-    country,
+    country = 'no country',
     director,
     duration,
     year,
@@ -169,6 +169,7 @@ function App() {
     nameRU,
     nameEN,
   }) {
+    console.log('like')
     mainApi
       .likeMovies({
         country,

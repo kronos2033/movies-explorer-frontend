@@ -7,7 +7,6 @@ import './MoviesCardList.css';
 function MoviesCardList(props) {
   let screenWidth = window.screen.width;
   let moviedCardCounter;
-
   useEffect(() => {
     getScreenWidth();
   }, []);

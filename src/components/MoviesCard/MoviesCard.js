@@ -13,13 +13,12 @@ function MoviesCard(props) {
   }
   function handleLike(e) {
     e.preventDefault();
-    isLiked && props.handleLike(props.movie);
+    props.handleLike(props.movie);
     setIsLiked(!isLiked);
   }
   function handleDelete() {
     props.handleDelete(props.movie._id);
   }
-  console.log(props.movieTrailer);
   return (
     <a
       className="movie__trailer"

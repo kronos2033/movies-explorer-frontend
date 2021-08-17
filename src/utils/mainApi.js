@@ -67,7 +67,7 @@ export const getSavedMovies = () => {
 };
 
 export const likeMovies = ({
-  country,
+  country ,
   director,
   duration,
   year,
