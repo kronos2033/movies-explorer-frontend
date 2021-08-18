@@ -169,10 +169,9 @@ function App() {
     nameRU,
     nameEN,
   }) {
-    console.log('like')
     mainApi
       .likeMovies({
-        country,
+        ['country']: country || 'не определена',
         director,
         duration,
         year,
@@ -184,7 +183,8 @@ function App() {
         nameRU,
         nameEN,
       })
-      .then((res) => {});
+      .then((res) => {})
+      .catch((err)=> console.log(err));
   }
 
   function handleDeleteMovie(id) {
@@ -228,6 +228,7 @@ function App() {
             searchParametrs={searchParametrs}
             setSearchParametrs={setSearchParametrs}
             setErrMessage={setSearchValidateError}
+            getSavedMoviesArray = {getSavedMoviesArray}
           />
           <Route path="/sign-in">
             <Login onLogin={handleLogin} />

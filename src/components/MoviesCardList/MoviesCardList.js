@@ -34,7 +34,7 @@ function MoviesCardList(props) {
               {props.movies.slice(0, maxRange).map((movie) => {
                 return (
                   <MoviesCard
-                    key={movie.id}
+                    key={movie.id || movie._id}
                     movieName={movie.nameRU}
                     movieDuration={movie.duration}
                     movieTrailer={movie.trailerLink}

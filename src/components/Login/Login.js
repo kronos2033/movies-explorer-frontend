@@ -7,10 +7,10 @@ import './Login.css';
 function Login(props) {
   const [userData, setUserData] = useState({ email: '', password: '' });
   const [emailValidateError, setEmailValidateError] = useState(
-    'Введите валидный email',
+    ' ',
   );
   const [passwordError, setPasswordError] = useState(
-    'Пароль должен содержать минимум 3 символа',
+    ' ',
   );
 
   function validateInput(name, value) {
@@ -73,18 +73,18 @@ function Login(props) {
             name="password"
             onChange={handleChange}
             value={userData.password}
-            type="text"
+            type="password"
             min="3"
             required
           />
           <span className=" form__text form__error-text">{passwordError}</span>
 
           <button
-            className={
-              emailValidateError || passwordError
-                ? 'form__btn form__btn_disabled'
-                : 'form__btn'
-            }
+            className={`form__btn login__btn
+              ${
+                emailValidateError || passwordError ? ' form__btn_disabled' : ''
+              }
+            `}
           >
             Войти
           </button>

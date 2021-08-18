@@ -9,15 +9,9 @@ function Register(props) {
     email: '',
     password: '',
   });
-  const [emailValidateError, setEmailValidateError] = useState(
-    'Введите валидный email',
-  );
-  const [nameError, setNameError] = useState(
-    'Имя должно содержать минимум 3 символа',
-  );
-  const [passwordError, setPasswordError] = useState(
-    'Пароль должен содержать минимум 3 символа',
-  );
+  const [emailValidateError, setEmailValidateError] = useState(' ');
+  const [nameError, setNameError] = useState(' ');
+  const [passwordError, setPasswordError] = useState(' ');
 
   function validateInput(name, value) {
     switch (name) {
@@ -96,7 +90,7 @@ function Register(props) {
             Пароль
           </span>
           <input
-            type="text"
+            type="password"
             className="form__input register__input register__input_password"
             name="password"
             value={userData.password}
@@ -105,11 +99,13 @@ function Register(props) {
           />
           <span className=" form__text form__error-text">{passwordError}</span>
           <button
-            className={
-              emailValidateError || nameError || passwordError
-                ? 'form__btn register__btn form__btn_disabled'
-                : 'form__btn register__btn'
-            }
+            className={` form__btn register__btn 
+              ${
+                emailValidateError || nameError || passwordError
+                  ? 'form__btn_disabled'
+                  : ''
+              }
+            `}
           >
             Зарегистрироваться
           </button>

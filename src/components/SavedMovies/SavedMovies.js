@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -6,6 +6,10 @@ import SearchForm from '../SearchForm/SearchForm';
 import './SavedMovies.css';
 
 function SavedMovies(props) {
+  useEffect(() => {
+    props.getSavedMoviesArray();
+  }, []);
+
   return (
     <>
       <Header loggedIn={props.loggedIn} />
@@ -21,7 +25,6 @@ function SavedMovies(props) {
           movies={props.savedMoviesArray}
           isLoading={props.isLoading}
           handleDelete={props.hendleDelete}
-          getSavedMoviesArray={props.getSavedMoviesArray}
           savedMovies
         />
       </section>
