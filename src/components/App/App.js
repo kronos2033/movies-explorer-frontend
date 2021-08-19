@@ -35,12 +35,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (loggedIn) {
-      history.push('/movies');
-    }
-  }, [loggedIn, history]);
-
-  useEffect(() => {
     mainApi
       .getUserInfo()
       .then((res) => {
@@ -205,7 +199,7 @@ function App() {
     <>
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
-          <Route path="/profile">
+          <Route exact path="/profile">
             <Profile
               userInfo={currentUser}
               loggedIn={loggedIn}
@@ -216,7 +210,7 @@ function App() {
               onLogout={handleLogout}
             />
           </Route>
-          <Route path="/movies">
+          <Route exact path="/movies">
             <Movies
               loggedIn={loggedIn}
               component={Movies}
@@ -232,7 +226,7 @@ function App() {
               preloader={preloader}
             />
           </Route>
-          <Route path="/saved-movies">
+          <Route exact path="/saved-movies">
             <SavedMovies
               loggedIn={loggedIn}
               component={SavedMovies}
@@ -247,12 +241,12 @@ function App() {
             />
           </Route>
           <ProtectedRoute
-            path="/sign -in"
+            exact path="/sign-in"
             onLogin={handleLogin}
             omponent={Login}
           />
           <ProtectedRoute
-            path="/sign-up"
+            exact path="/sign-up"
             component={Register}
             onRegister={handleRegister}
             popupText={popupText}
@@ -260,12 +254,12 @@ function App() {
             setOpen={setIsOpenPopup}
           />
 
-          <Route path="/main">
+          <Route exact path="/main">
             <Main loggedIn={loggedIn} />
           </Route>
         </Switch>
         <Route path="*">
-          <NotFoundPage />
+          <NotFoundPage goBack={history}/>
         </Route>
       </CurrentUserContext.Provider>
     </>
