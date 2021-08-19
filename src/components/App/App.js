@@ -1,4 +1,4 @@
-//TODO isLoading
+//TODO preloader like movie
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -27,13 +27,13 @@ function App() {
   });
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [popupText, setPopupText] = useState('');
+  const [preloader, setPreloader] = useState(false)
   const history = useHistory();
 
-
-  useEffect(()=> {
+  useEffect(() => {
     jwtTokenCheck();
-  })
-  
+  }, []);
+
   useEffect(() => {
     if (loggedIn) {
       history.push('/movies');
@@ -52,6 +52,7 @@ function App() {
   }, []);
 
   useEffect(async () => {
+    setPreloader(true)
     movieArray = await movieApi.getMovies().catch((err) => console.log(err));
     if (localStorage.getItem('searchParams')) {
       const initialSearchParams = JSON.parse(
@@ -63,6 +64,7 @@ function App() {
       });
       handleSearchMovies(initialSearchParams.name, initialSearchParams.checked);
     }
+    setPreloader(false)
   }, []);
 
   function getSavedMoviesArray() {
@@ -116,12 +118,9 @@ function App() {
   }
 
   function handleSearchMovies(name, checked) {
-    console.log('handleSearchMovies', name, checked);
-    console.log('movieArray', movieArray);
     const filteredMoviesByName = movieArray.filter((movie) =>
       movie.nameRU.includes(name),
     );
-    console.log('filteredMoviesByName', filteredMoviesByName);
     const filteredMovies = checked
       ? filteredMoviesByName.filter((movie) => movie.duration < 40)
       : filteredMoviesByName;
@@ -191,71 +190,83 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleDeleteMovie(id) {
-    mainApi.deleteMovie(id).then((res) => getSavedMoviesArray());
+  async function handleDeleteByLike(id) {
+    const savedMovie = await mainApi.getSavedMovies();
+    const deletedMovie = savedMovie.filter((movie) => movie.movieId === id);
+    mainApi
+      .deleteMovie(deletedMovie[0]._id)
+      .then((res) => getSavedMoviesArray());
   }
 
+  function handleDelete(id) {
+    mainApi.deleteMovie(id).then((res) => getSavedMoviesArray());
+  }
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
-          <ProtectedRoute
-            path="/profile"
-            component={Profile}
-            userInfo={currentUser}
-            loggedIn={loggedIn}
-            popupText={popupText}
-            open={isOpenPopup}
-            setOpen={setIsOpenPopup}
-            onUpdate={handleUpdateProfile}
-            onLogout={handleLogout}
-          />
-          <ProtectedRoute
-            path="/movies"
-            loggedIn={loggedIn}
-            component={Movies}
-            moviesArray={filteredMovieArray}
-            errMessage={searchValidateError}
-            handleLike={handleLikeMovie}
-            handleSearch={handleSearchMovies}
-            searchParametrs={searchParametrs}
-            setSearchParametrs={setSearchParametrs}
-            setErrMessage={setSearchValidateError}
-          />
-          <ProtectedRoute
-            path="/saved-movies"
-            loggedIn={loggedIn}
-            component={SavedMovies}
-            errMessage={searchValidateError}
-            hendleDelete={handleDeleteMovie}
-            handleSearch={handleSearchSavedMovies}
-            savedMoviesArray={savedMovieArray}
-            searchParametrs={searchParametrs}
-            setSearchParametrs={setSearchParametrs}
-            setErrMessage={setSearchValidateError}
-            getSavedMoviesArray={getSavedMoviesArray}
-          />
-          <Route path="/sign-in">
-            <Login onLogin={handleLogin} />
-          </Route>
-          <Route path="/sign-up">
-            <Register
-              onRegister={handleRegister}
+          <Route path="/profile">
+            <Profile
+              userInfo={currentUser}
+              loggedIn={loggedIn}
               popupText={popupText}
               open={isOpenPopup}
               setOpen={setIsOpenPopup}
+              onUpdate={handleUpdateProfile}
+              onLogout={handleLogout}
             />
           </Route>
+          <Route path="/movies">
+            <Movies
+              loggedIn={loggedIn}
+              component={Movies}
+              moviesArray={filteredMovieArray}
+              errMessage={searchValidateError}
+              handleDelete={handleDelete}
+              handleLike={handleLikeMovie}
+              handleSearch={handleSearchMovies}
+              searchParametrs={searchParametrs}
+              setSearchParametrs={setSearchParametrs}
+              setErrMessage={setSearchValidateError}
+              handleDeleteByLike={handleDeleteByLike}
+              preloader={preloader}
+            />
+          </Route>
+          <Route path="/saved-movies">
+            <SavedMovies
+              loggedIn={loggedIn}
+              component={SavedMovies}
+              errMessage={searchValidateError}
+              handleDelete={handleDelete}
+              handleSearch={handleSearchSavedMovies}
+              savedMoviesArray={savedMovieArray}
+              searchParametrs={searchParametrs}
+              setSearchParametrs={setSearchParametrs}
+              setErrMessage={setSearchValidateError}
+              getSavedMoviesArray={getSavedMoviesArray}
+            />
+          </Route>
+          <ProtectedRoute
+            path="/sign -in"
+            onLogin={handleLogin}
+            omponent={Login}
+          />
+          <ProtectedRoute
+            path="/sign-up"
+            component={Register}
+            onRegister={handleRegister}
+            popupText={popupText}
+            open={isOpenPopup}
+            setOpen={setIsOpenPopup}
+          />
+
           <Route path="/main">
             <Main loggedIn={loggedIn} />
           </Route>
-          <Route>
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/main" />}
-          </Route>
-          <Route path="*">
-            <NotFoundPage />
-          </Route>
         </Switch>
+        <Route path="*">
+          <NotFoundPage />
+        </Route>
       </CurrentUserContext.Provider>
     </>
   );

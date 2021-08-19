@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { MOVIE_URL } from '../../utils/movieApi';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import Preloader from '../Preloader/Preloader';
+import Preloader from '../Preloader/Preloader'
+
 import './MoviesCardList.css';
 
 function MoviesCardList(props) {
   useEffect(() => {
     getScreenWidth();
-  }, []);
+  }, [getScreenWidth]);
 
   function getScreenWidth() {
     if (screenWidth > 321) {
@@ -25,7 +26,7 @@ function MoviesCardList(props) {
   const [maxRange, setMaxRange] = useState(moviedCardCounter);
 
   return (
-    <>
+    <>{ props.preloader? <Preloader/> :
       <>
         {props.movies.length > 0 ? (
           <>
@@ -41,6 +42,7 @@ function MoviesCardList(props) {
                       ? movie.image
                       : `${MOVIE_URL}${movie.image.url}`
                   }
+                  handleDeleteByLike={props.handleDeleteByLike}
                   savedMovies={props.savedMovies}
                   movie={movie}
                   handleLike={props.handleLike}
@@ -58,6 +60,7 @@ function MoviesCardList(props) {
           <p className="movie-list__notfound">Ничего не найдено</p>
         )}
       </>
+    }
     </>
   );
 }

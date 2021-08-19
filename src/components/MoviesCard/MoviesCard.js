@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import './MoviesCard.css';
 function MoviesCard(props) {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(true);
+
   function getTimeFromMins(mins) {
     let hours = Math.trunc(mins / 60);
     let minutes = mins % 60;
@@ -13,12 +14,22 @@ function MoviesCard(props) {
   }
   function handleLike(e) {
     e.preventDefault();
+    props.movie.liked = isLiked;
     props.handleLike(props.movie);
     setIsLiked(!isLiked);
   }
+
+  function handleDeleteByLike (e, id) {
+    e.preventDefault();
+    props.movie.liked = isLiked;
+    setIsLiked(!isLiked);
+    props.handleDeleteByLike(id)
+  }
+
   function handleDelete() {
     props.handleDelete(props.movie._id);
   }
+
   return (
     <a
       className="movie__trailer"
@@ -33,13 +44,20 @@ function MoviesCard(props) {
             {getTimeFromMins(props.movieDuration)}
           </p>
           {props.savedMovies ? (
-            <button className="movie__delete" onClick={handleDelete} />
+            <button
+              className="movie__delete"
+              onClick={handleDelete}
+            />
           ) : (
             <button
-              className={
-                isLiked ? 'movie__like_active movie__like' : 'movie__like'
+              className={`movie__like 
+              ${props.movie.liked ? 'movie__like_active ' : ''}`
               }
-              onClick={handleLike}
+              onClick={
+                props.movie.liked
+                  ? (e) => handleDeleteByLike(e, props.movie.id)
+                  : handleLike
+              }
             />
           )}
         </div>

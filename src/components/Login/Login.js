@@ -19,19 +19,19 @@ function Login(props) {
       case 'password':
         if (value.length < 3 && name === 'password') {
           setPasswordError('Пароль должен содержать минимум 3 символа');
-          setValid({...valid, passwordValid: false})
+          setValid({ ...valid, passwordValid: false });
         } else {
           setPasswordError('');
-          setValid({...valid, passwordValid: true})
+          setValid({ ...valid, passwordValid: true });
         }
         break;
       case 'email':
         if (!validate(value) && name === 'email') {
-          setValid({...valid, emailValid: false})
+          setValid({ ...valid, emailValid: false });
           setEmailError('Введите верный email');
         } else {
           setEmailError('');
-          setValid({...valid, emailValid: true})
+          setValid({ ...valid, emailValid: true });
         }
         break;
       default:
@@ -83,7 +83,11 @@ function Login(props) {
           <span className=" form__text form__error-text">{passwordError}</span>
           <button
             className={`form__btn login__btn
-              ${valid.emailValid && valid.passwordValid ? '' : 'form__btn_disabled'}
+              ${
+                valid.emailValid && valid.passwordValid
+                  ? ''
+                  : 'form__btn_disabled'
+              }
             `}
             disabled={!(valid.emailValid && valid.passwordValid)}
           >

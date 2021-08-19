@@ -16,13 +16,15 @@ function Movies(props) {
           setSearchParametrs={props.setSearchParametrs}
           setErrMessage={props.setErrMessage}
         />
-        
+
         <MoviesCardList
+          preloader={props.preloader}
           movies={props.moviesArray}
+          handleDeleteByLike={props.handleDeleteByLike}
+          handleDelete={props.handleDelete}
           handleLike={props.handleLike}
           savedMovies={false}
         />
-        
       </section>
       <Footer />
     </>
