@@ -253,14 +253,17 @@ function App() {
             open={isOpenPopup}
             setOpen={setIsOpenPopup}
           />
-
           <Route exact path="/main">
             <Main loggedIn={loggedIn} />
           </Route>
-        </Switch>
-        <Route path="*">
+          <Route exact path='/'>
+            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/main" />}
+          </Route>
+          <Route path="*">
           <NotFoundPage goBack={history}/>
         </Route>
+        </Switch>
+        
       </CurrentUserContext.Provider>
     </>
   );
