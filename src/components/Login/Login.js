@@ -1,32 +1,37 @@
 import { useState } from 'react';
 import { validate } from 'react-email-validator';
 import { Link } from 'react-router-dom';
+
 import headerLogo from '../../images/logo.svg';
 import './Login.css';
 
 function Login(props) {
   const [userData, setUserData] = useState({ email: '', password: '' });
-  const [emailValidateError, setEmailValidateError] = useState(
-    ' ',
-  );
-  const [passwordError, setPasswordError] = useState(
-    ' ',
-  );
+  const [emailError, setEmailError] = useState(' ');
+  const [passwordError, setPasswordError] = useState(' ');
+  const [valid, setValid] = useState({
+    emailValid: false,
+    passwordValid: false,
+  });
 
   function validateInput(name, value) {
     switch (name) {
       case 'password':
         if (value.length < 3 && name === 'password') {
           setPasswordError('Пароль должен содержать минимум 3 символа');
+          setValid({...valid, passwordValid: false})
         } else {
           setPasswordError('');
+          setValid({...valid, passwordValid: true})
         }
         break;
       case 'email':
         if (!validate(value) && name === 'email') {
-          setEmailValidateError('Введите верный email');
+          setValid({...valid, emailValid: false})
+          setEmailError('Введите верный email');
         } else {
-          setEmailValidateError('');
+          setEmailError('');
+          setValid({...valid, emailValid: true})
         }
         break;
       default:
@@ -34,6 +39,7 @@ function Login(props) {
     }
   }
 
+console.log(!(valid.emailValid && valid.passwordValid))
   function handleChange(e) {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
@@ -62,9 +68,7 @@ function Login(props) {
             value={userData.email}
             required
           />
-          <span className=" form__text form__error-text">
-            {emailValidateError}
-          </span>
+          <span className=" form__text form__error-text">{emailError}</span>
           <span className="form__text login__text login__text_password">
             Пароль
           </span>
@@ -78,13 +82,11 @@ function Login(props) {
             required
           />
           <span className=" form__text form__error-text">{passwordError}</span>
-
           <button
             className={`form__btn login__btn
-              ${
-                emailValidateError || passwordError ? ' form__btn_disabled' : ''
-              }
+              ${valid.emailValid && valid.passwordValid ? '' : 'form__btn_disabled'}
             `}
+            disabled={!(valid.emailValid && valid.passwordValid)}
           >
             Войти
           </button>

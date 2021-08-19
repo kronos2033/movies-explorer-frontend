@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { validate } from 'react-email-validator';
 import { Link } from 'react-router-dom';
 import headerLogo from '../../images/logo.svg';
+import Popup from '../Popup/Popup';
 import './Register.css';
 function Register(props) {
   const [userData, setUserData] = useState({
@@ -12,27 +13,40 @@ function Register(props) {
   const [emailValidateError, setEmailValidateError] = useState(' ');
   const [nameError, setNameError] = useState(' ');
   const [passwordError, setPasswordError] = useState(' ');
+  const [valid, setValid] = useState({
+    emailValid: false,
+    nameValid: false,
+    passwordValid: false,
+  });
+
+
 
   function validateInput(name, value) {
     switch (name) {
       case 'name':
         if (value.length < 3 && name === 'name') {
+          setValid({...valid, nameValid: false})
           setNameError('Имя должно содержать минимум 3 символа');
         } else {
+          setValid({...valid, nameValid: true})
           setNameError('');
         }
         break;
       case 'email':
         if (!validate(value) && name === 'email') {
+          setValid({...valid, emailValid: false})
           setEmailValidateError('Введите верный email');
         } else {
+          setValid({...valid, emailValid: true})
           setEmailValidateError('');
         }
         break;
       case 'password':
         if (value.length < 3 && name === 'password') {
+          setValid({...valid, passwordValid: false})
           setPasswordError('Пароль должен содержать минимум 3 символа');
         } else {
+          setValid({...valid, passwordValid: true})
           setPasswordError('');
         }
         break;
@@ -51,7 +65,7 @@ function Register(props) {
     e.preventDefault();
     props.onRegister(userData);
   };
-
+console.log(valid.emailValid && valid.passwordValid && valid.nameValid)
   return (
     <section className="section section_type_narrow">
       <div className="register sign">
@@ -100,12 +114,9 @@ function Register(props) {
           <span className=" form__text form__error-text">{passwordError}</span>
           <button
             className={` form__btn register__btn 
-              ${
-                emailValidateError || nameError || passwordError
-                  ? 'form__btn_disabled'
-                  : ''
-              }
+              ${valid.emailValid && valid.passwordValid && valid.nameValid ? '' :'form__btn_disabled' }
             `}
+            disabled={!(valid.emailValid && valid.passwordValid && valid.nameValid)}
           >
             Зарегистрироваться
           </button>
@@ -119,7 +130,9 @@ function Register(props) {
           &nbsp;Войти
         </Link>
       </div>
+        <Popup open = {props.open} text ={props.popupText} setOpen={props.setOpen}/>
     </section>
+    
   );
 }
 

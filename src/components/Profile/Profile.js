@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { validate } from 'react-email-validator';
 import Header from '../Header/Header';
+import Popup from '../Popup/Popup';
 import './Profile.css';
 
 function Profile(props) {
@@ -10,19 +11,32 @@ function Profile(props) {
   });
   const [emailValidateError, setEmailValidateError] = useState('');
   const [nameError, setNameError] = useState('');
+  const [valid, setValid] = useState({
+    emailValid: false,
+    nameValid: false,
+  });
+
+  useEffect(() => {
+    setValid(!!emailValidateError && !!nameError);
+  }, [emailValidateError, nameError]);
+
   function validateInput(name, value) {
     switch (name) {
       case 'name':
         if (value.length < 3 && name === 'name') {
+          setValid({ ...valid, nameValid: false });
           setNameError('Имя должно содержать минимум 3 символа');
         } else {
+          setValid({ ...valid, nameValid: true });
           setNameError('');
         }
         break;
       case 'email':
         if (!validate(value) && name === 'email') {
+          setValid({ ...valid, emailValid: false });
           setEmailValidateError('Введите верный email');
         } else {
+          setValid({ ...valid, emailValid: true });
           setEmailValidateError('');
         }
         break;
@@ -74,11 +88,14 @@ function Profile(props) {
             {emailValidateError}
           </span>
           <button
-            className={
-              emailValidateError || nameError
-                ? 'profile__button profile__button_correction profiel__button_disabled'
-                : 'profile__button profile__button_correction'
-            }
+            className={`profile__button profile__button_correction
+              ${
+                valid.emailValid && valid.nameValid
+                  ? ''
+                  : 'profiel__button_disabled'
+              }
+            `}
+            disabled={!(valid.emailValid && valid.nameValid)}
             onClick={handleSubmit}
           >
             Редактировать
@@ -90,6 +107,11 @@ function Profile(props) {
         >
           Выйти из аккаунта
         </button>
+        <Popup
+          open={props.open}
+          text={props.popupText}
+          setOpen={props.setOpen}
+        />
       </section>
     </>
   );

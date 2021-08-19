@@ -24,6 +24,8 @@ function App() {
     name: '',
     checked: false,
   });
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [popupText, setPopupText] = useState('');
 
   const history = useHistory();
   useEffect(() => {
@@ -103,10 +105,12 @@ function App() {
     return mainApi
       .register(name, email, password)
       .then((res) => {
-        history.push('/sign-in');
-      })
+        handleLogin({ email, password })
+        })
       .catch((err) => {
         console.log(`Ошибка при регистрации: ${err}`);
+        setIsOpenPopup(true)
+        setPopupText('Во время регистрации произошла ошибка, попробуйте снова');
       });
   }
 
@@ -153,8 +157,14 @@ function App() {
       .updateUserInfo(name, email)
       .then((newUserInfo) => {
         setCurrentUser({ name: newUserInfo.name, email: newUserInfo.email });
+        setIsOpenPopup(true);
+        setPopupText('Данные учетной записи обновлены');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsOpenPopup(true);
+        setPopupText('Данные не обновлены, проверьте корректность введенных данных');
+      });
   }
 
   function handleLikeMovie({
@@ -184,7 +194,7 @@ function App() {
         nameEN,
       })
       .then((res) => {})
-      .catch((err)=> console.log(err));
+      .catch((err) => console.log(err));
   }
 
   function handleDeleteMovie(id) {
@@ -200,6 +210,9 @@ function App() {
             component={Profile}
             userInfo={currentUser}
             loggedIn={loggedIn}
+            popupText={popupText}
+            open={isOpenPopup}
+            setOpen={setIsOpenPopup}
             onUpdate={handleUpdateProfile}
             onLogout={handleLogout}
           />
@@ -228,13 +241,18 @@ function App() {
             searchParametrs={searchParametrs}
             setSearchParametrs={setSearchParametrs}
             setErrMessage={setSearchValidateError}
-            getSavedMoviesArray = {getSavedMoviesArray}
+            getSavedMoviesArray={getSavedMoviesArray}
           />
           <Route path="/sign-in">
             <Login onLogin={handleLogin} />
           </Route>
           <Route path="/sign-up">
-            <Register onRegister={handleRegister} />
+            <Register
+              onRegister={handleRegister}
+              popupText={popupText}
+              open={isOpenPopup}
+              setOpen={setIsOpenPopup}
+            />
           </Route>
           <Route path="/main">
             <Main loggedIn={loggedIn} />
