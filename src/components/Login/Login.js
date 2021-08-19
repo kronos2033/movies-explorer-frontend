@@ -39,7 +39,6 @@ function Login(props) {
     }
   }
 
-console.log(!(valid.emailValid && valid.passwordValid))
   function handleChange(e) {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });

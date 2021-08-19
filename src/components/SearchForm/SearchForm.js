@@ -1,8 +1,6 @@
 import './SearchForm.css';
 
 function SearchForm(props) {
- 
-
   function handleSearchMovie(name, checked) {
     props.handleSearch(name, checked);
     localStorage.setItem('searchParams', JSON.stringify(props.searchParametrs));
@@ -37,7 +35,10 @@ function SearchForm(props) {
         className="search__form"
         onSubmit={(e) => {
           e.preventDefault();
-          handleSearchMovie(props.searchParametrs.name, props.searchParametrs.checked);
+          handleSearchMovie(
+            props.searchParametrs.name,
+            props.searchParametrs.checked,
+          );
         }}
       >
         <div className="search__container">

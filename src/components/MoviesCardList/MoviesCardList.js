@@ -5,8 +5,6 @@ import Preloader from '../Preloader/Preloader';
 import './MoviesCardList.css';
 
 function MoviesCardList(props) {
-  let screenWidth = window.screen.width;
-  let moviedCardCounter;
   useEffect(() => {
     getScreenWidth();
   }, []);
@@ -18,49 +16,48 @@ function MoviesCardList(props) {
       return (moviedCardCounter = 5);
     }
   }
-  getScreenWidth();
-  const [maxRange, setMaxRange] = useState(moviedCardCounter);
+
+  const screenWidth = window.screen.width;
+  let moviedCardCounter;
   const loadMore = useCallback(() => {
     setMaxRange((prevRange) => prevRange + moviedCardCounter);
   }, []);
+  const [maxRange, setMaxRange] = useState(moviedCardCounter);
+
   return (
     <>
-      {props.isLoading ? (
-        <Preloader />
-      ) : (
-        <>
-          {props.movies.length > 0 ? (
-            <>
-              {props.movies.slice(0, maxRange).map((movie) => {
-                return (
-                  <MoviesCard
-                    key={movie.id || movie._id}
-                    movieName={movie.nameRU}
-                    movieDuration={movie.duration}
-                    movieTrailer={movie.trailerLink}
-                    movieImage={
-                      props.savedMovies
-                        ? movie.image
-                        : `${MOVIE_URL}${movie.image.url}`
-                    }
-                    savedMovies={props.savedMovies}
-                    movie={movie}
-                    handleLike={props.handleLike}
-                    handleDelete={props.handleDelete}
-                  />
-                );
-              })}
-              {props.movies.length > moviedCardCounter && (
-                <button className="movies-list__button" onClick={loadMore}>
-                  Ещё
-                </button>
-              )}
-            </>
-          ) : (
-            <p className="movie-list__notfound">Ничего не найдено</p>
-          )}
-        </>
-      )}
+      <>
+        {props.movies.length > 0 ? (
+          <>
+            {props.movies.slice(0, maxRange).map((movie) => {
+              return (
+                <MoviesCard
+                  key={movie.id || movie._id}
+                  movieName={movie.nameRU}
+                  movieDuration={movie.duration}
+                  movieTrailer={movie.trailerLink}
+                  movieImage={
+                    props.savedMovies
+                      ? movie.image
+                      : `${MOVIE_URL}${movie.image.url}`
+                  }
+                  savedMovies={props.savedMovies}
+                  movie={movie}
+                  handleLike={props.handleLike}
+                  handleDelete={props.handleDelete}
+                />
+              );
+            })}
+            {props.movies.length > moviedCardCounter && (
+              <button className="movies-list__button" onClick={loadMore}>
+                Ещё
+              </button>
+            )}
+          </>
+        ) : (
+          <p className="movie-list__notfound">Ничего не найдено</p>
+        )}
+      </>
     </>
   );
 }

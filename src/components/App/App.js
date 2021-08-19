@@ -1,3 +1,4 @@
+//TODO isLoading
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -12,31 +13,32 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Register from '../Register/Register';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import './App.css';
+let movieArray = [];
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchValidateError, setSearchValidateError] = useState('');
-  const [movieArray, setMovieArray] = useState([]);
   const [savedMovieArray, setSavedMovieArray] = useState([]);
+  const [filteredMovieArray, setFilteredMovieArray] = useState([]);
   const [searchParametrs, setSearchParametrs] = useState({
     name: '',
     checked: false,
   });
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [popupText, setPopupText] = useState('');
-
   const history = useHistory();
+
+
+  useEffect(()=> {
+    jwtTokenCheck();
+  })
+  
   useEffect(() => {
     if (loggedIn) {
       history.push('/movies');
     }
   }, [loggedIn, history]);
-
-  useEffect(() => {
-    jwtTokenCheck();
-  }, []);
 
   useEffect(() => {
     mainApi
@@ -49,7 +51,8 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
+  useEffect(async () => {
+    movieArray = await movieApi.getMovies().catch((err) => console.log(err));
     if (localStorage.getItem('searchParams')) {
       const initialSearchParams = JSON.parse(
         localStorage.getItem('searchParams'),
@@ -59,10 +62,6 @@ function App() {
         checked: initialSearchParams.checked,
       });
       handleSearchMovies(initialSearchParams.name, initialSearchParams.checked);
-      handleSearchSavedMovies(
-        initialSearchParams.name,
-        initialSearchParams.checked,
-      );
     }
   }, []);
 
@@ -95,46 +94,41 @@ function App() {
         console.log('что то пошло не так');
       });
   }
+
   function handleLogout() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('searchParams');
     history.push('/signin');
     setLoggedIn(false);
   }
+
   function handleRegister({ name, email, password }) {
     return mainApi
       .register(name, email, password)
       .then((res) => {
-        handleLogin({ email, password })
-        })
+        handleLogin({ email, password });
+      })
       .catch((err) => {
         console.log(`Ошибка при регистрации: ${err}`);
-        setIsOpenPopup(true)
+        setIsOpenPopup(true);
         setPopupText('Во время регистрации произошла ошибка, попробуйте снова');
       });
   }
 
   function handleSearchMovies(name, checked) {
-    setIsLoading(true);
-    movieApi
-      .getMovies()
-      .then((res) => {
-        const filteredMoviesByName = res.filter((movie) =>
-          movie.nameRU.includes(name),
-        );
-        const filteredMovies = checked
-          ? filteredMoviesByName.filter((movie) => movie.duration < 40)
-          : filteredMoviesByName;
-        setMovieArray(filteredMovies);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log('Ошибка при попытке получить массив фильмов:', err);
-      });
+    console.log('handleSearchMovies', name, checked);
+    console.log('movieArray', movieArray);
+    const filteredMoviesByName = movieArray.filter((movie) =>
+      movie.nameRU.includes(name),
+    );
+    console.log('filteredMoviesByName', filteredMoviesByName);
+    const filteredMovies = checked
+      ? filteredMoviesByName.filter((movie) => movie.duration < 40)
+      : filteredMoviesByName;
+    setFilteredMovieArray(filteredMovies);
   }
 
   function handleSearchSavedMovies(name, checked) {
-    setIsLoading(true);
     mainApi
       .getSavedMovies()
       .then((res) => {
@@ -145,14 +139,12 @@ function App() {
           ? filteredMoviesByName.filter((movie) => movie.duration < 40)
           : filteredMoviesByName;
         setSavedMovieArray(filteredMovies);
-        setIsLoading(false);
       })
       .catch((err) => {
         console.log('Ошибка при попытке получить массив фильмов:', err);
       });
   }
   function handleUpdateProfile({ name, email }) {
-    console.log(name, email);
     mainApi
       .updateUserInfo(name, email)
       .then((newUserInfo) => {
@@ -163,7 +155,9 @@ function App() {
       .catch((err) => {
         console.log(err);
         setIsOpenPopup(true);
-        setPopupText('Данные не обновлены, проверьте корректность введенных данных');
+        setPopupText(
+          'Данные не обновлены, проверьте корректность введенных данных',
+        );
       });
   }
 
@@ -220,8 +214,7 @@ function App() {
             path="/movies"
             loggedIn={loggedIn}
             component={Movies}
-            isLoading={isLoading}
-            moviesArray={movieArray}
+            moviesArray={filteredMovieArray}
             errMessage={searchValidateError}
             handleLike={handleLikeMovie}
             handleSearch={handleSearchMovies}
@@ -233,7 +226,6 @@ function App() {
             path="/saved-movies"
             loggedIn={loggedIn}
             component={SavedMovies}
-            isLoading={isLoading}
             errMessage={searchValidateError}
             hendleDelete={handleDeleteMovie}
             handleSearch={handleSearchSavedMovies}
