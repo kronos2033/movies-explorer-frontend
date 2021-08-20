@@ -58,7 +58,7 @@ function Profile(props) {
     <>
       <Header loggedIn={props.loggedIn} />
       <section className="profile">
-        <h2 className="profile__title">Привет, Александр!</h2>
+        <h2 className="profile__title">{`Привет, ${userData.name}`}</h2>
         <form className="profile__form">
           <div className="profile__input-container">
             <span className="profile__text">Имя</span>

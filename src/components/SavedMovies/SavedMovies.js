@@ -6,9 +6,6 @@ import SearchForm from '../SearchForm/SearchForm';
 import './SavedMovies.css';
 
 function SavedMovies(props) {
-  useEffect(() => {
-    props.getSavedMoviesArray();
-  }, []);
 
   return (
     <>

@@ -1,6 +1,5 @@
-//TODO preloader like movie
 import { useEffect, useState } from 'react';
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as mainApi from '../../utils/mainApi';
 import * as movieApi from '../../utils/movieApi';
@@ -17,7 +16,6 @@ let movieArray = [];
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
-  const [loggedIn, setLoggedIn] = useState(false);
   const [searchValidateError, setSearchValidateError] = useState('');
   const [savedMovieArray, setSavedMovieArray] = useState([]);
   const [filteredMovieArray, setFilteredMovieArray] = useState([]);
@@ -27,7 +25,9 @@ function App() {
   });
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [popupText, setPopupText] = useState('');
-  const [preloader, setPreloader] = useState(false)
+  const [preloader, setPreloader] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const location = useLocation();
   const history = useHistory();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function App() {
   }, []);
 
   useEffect(async () => {
-    setPreloader(true)
+    setPreloader(true);
     movieArray = await movieApi.getMovies().catch((err) => console.log(err));
     if (localStorage.getItem('searchParams')) {
       const initialSearchParams = JSON.parse(
@@ -58,7 +58,7 @@ function App() {
       });
       handleSearchMovies(initialSearchParams.name, initialSearchParams.checked);
     }
-    setPreloader(false)
+    setPreloader(false);
   }, []);
 
   function getSavedMoviesArray() {
@@ -70,7 +70,9 @@ function App() {
       let jwt = localStorage.getItem('jwt');
       mainApi.getContent(jwt).then((res) => {
         if (res.email) {
+          const path = location.pathname;
           setLoggedIn(true);
+          history.push(path);
         }
       });
     }
@@ -81,9 +83,9 @@ function App() {
       .autorize(email, password)
       .then((res) => {
         if (res.token) {
-          history.push('/movies');
-          localStorage.setItem('jwt', res.token);
           setLoggedIn(true);
+          history.push('/');
+          localStorage.setItem('jwt', res.token);
         }
       })
       .catch((err) => {
@@ -94,7 +96,7 @@ function App() {
   function handleLogout() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('searchParams');
-    history.push('/signin');
+    history.push('/sign-in');
     setLoggedIn(false);
   }
 
@@ -199,71 +201,65 @@ function App() {
     <>
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
-          <Route exact path="/profile">
-            <Profile
-              userInfo={currentUser}
-              loggedIn={loggedIn}
-              popupText={popupText}
-              open={isOpenPopup}
-              setOpen={setIsOpenPopup}
-              onUpdate={handleUpdateProfile}
-              onLogout={handleLogout}
-            />
-          </Route>
-          <Route exact path="/movies">
-            <Movies
-              loggedIn={loggedIn}
-              component={Movies}
-              moviesArray={filteredMovieArray}
-              errMessage={searchValidateError}
-              handleDelete={handleDelete}
-              handleLike={handleLikeMovie}
-              handleSearch={handleSearchMovies}
-              searchParametrs={searchParametrs}
-              setSearchParametrs={setSearchParametrs}
-              setErrMessage={setSearchValidateError}
-              handleDeleteByLike={handleDeleteByLike}
-              preloader={preloader}
-            />
-          </Route>
-          <Route exact path="/saved-movies">
-            <SavedMovies
-              loggedIn={loggedIn}
-              component={SavedMovies}
-              errMessage={searchValidateError}
-              handleDelete={handleDelete}
-              handleSearch={handleSearchSavedMovies}
-              savedMoviesArray={savedMovieArray}
-              searchParametrs={searchParametrs}
-              setSearchParametrs={setSearchParametrs}
-              setErrMessage={setSearchValidateError}
-              getSavedMoviesArray={getSavedMoviesArray}
-            />
-          </Route>
-          <ProtectedRoute
-            exact path="/sign-in"
-            onLogin={handleLogin}
-            omponent={Login}
+        <ProtectedRoute
+            exact path="/"
+            component={Movies}
+            loggedIn={loggedIn}
+            moviesArray={filteredMovieArray}
+            errMessage={searchValidateError}
+            handleDelete={handleDelete}
+            handleLike={handleLikeMovie}
+            handleSearch={handleSearchMovies}
+            searchParametrs={searchParametrs}
+            setSearchParametrs={setSearchParametrs}
+            setErrMessage={setSearchValidateError}
+            handleDeleteByLike={handleDeleteByLike}
+            preloader={preloader}
+            tockenCheck={jwtTokenCheck}
           />
           <ProtectedRoute
-            exact path="/sign-up"
-            component={Register}
-            onRegister={handleRegister}
+            path="/profile"
+            component={Profile}
+            userInfo={currentUser}
+            loggedIn={loggedIn}
             popupText={popupText}
             open={isOpenPopup}
             setOpen={setIsOpenPopup}
+            onUpdate={handleUpdateProfile}
+            onLogout={handleLogout}
           />
+          
+          <ProtectedRoute
+            path="/saved-movies"
+            component={SavedMovies}
+            loggedIn={loggedIn}
+            errMessage={searchValidateError}
+            handleDelete={handleDelete}
+            handleSearch={handleSearchSavedMovies}
+            savedMoviesArray={savedMovieArray}
+            searchParametrs={searchParametrs}
+            setSearchParametrs={setSearchParametrs}
+            setErrMessage={setSearchValidateError}
+            getSavedMoviesArray={getSavedMoviesArray}
+          />
+          <Route path="/sign-in">
+            <Login onLogin={handleLogin} />
+          </Route>
+          <Route path="/sign-up">
+            <Register
+              onRegister={handleRegister}
+              popupText={popupText}
+              open={isOpenPopup}
+              setOpen={setIsOpenPopup}
+            />
+          </Route>
           <Route exact path="/main">
             <Main loggedIn={loggedIn} />
           </Route>
-          <Route exact path='/'>
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/main" />}
-          </Route>
           <Route path="*">
-          <NotFoundPage goBack={history}/>
-        </Route>
+            <NotFoundPage goBack={history} />
+          </Route>
         </Switch>
-        
       </CurrentUserContext.Provider>
     </>
   );
