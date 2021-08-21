@@ -1,20 +1,31 @@
-import './SavedMovies.css';
-import SearchForm from '../SearchForm/SearchForm';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Header from '../Header/Header';
+import { useEffect } from 'react';
 import Footer from '../Footer/Footer';
-import { likedMovies } from '../../utils/constants';
+import Header from '../Header/Header';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import SearchForm from '../SearchForm/SearchForm';
+import './SavedMovies.css';
 
 function SavedMovies(props) {
-  const savedMovies = true;
+
   return (
     <>
-    <Header/>
-    <section className='saved-movies section'>
-      <SearchForm />
-      <MoviesCardList movies={likedMovies} savedMovies={savedMovies} />
-    </section>
-    <Footer/>
+      <Header loggedIn={props.loggedIn} />
+      <section className="saved-movies section">
+        <SearchForm
+          errMessage={props.errMessage}
+          handleSearch={props.handleSearch}
+          searchParametrs={props.searchParametrs}
+          setSearchParametrs={props.setSearchParametrs}
+          setErrMessage={props.setErrMessage}
+        />
+        <MoviesCardList
+          movies={props.savedMoviesArray}
+          isLoading={props.isLoading}
+          handleDelete={props.handleDelete}
+          savedMovies
+        />
+      </section>
+      <Footer />
     </>
   );
 }

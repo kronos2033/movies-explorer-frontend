@@ -3,7 +3,6 @@
   justify-self: center;
   justify-content: center;
   align-items: center;
-
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
@@ -12,4 +11,11 @@
   background-color: #f9f9f9;
   border: none;
   margin: 50px auto 0;
+}
+.movie-list__notfound {
+  text-align: center;
+  margin: 150px;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 50px;
 }

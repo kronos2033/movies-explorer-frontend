@@ -1,16 +1,33 @@
-import './Movie.css';
+import * as movieApi from '../../utils/movieApi';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import SearchForm from '../SearchForm/SearchForm';
+import './Movies.css';
 
-function Movie(props) {
+function Movies(props) {
   return (
-    <section className='movie section section_type_narrow'>
-      <div className='movie__container'>
-        <h2 className='movie__title'>{props.movieName}</h2>
-        <p className='movie__length'>1ч 42м</p>
-        <button className='movie__delete' />
-        <img className='movie__poster' src={props.movieImage} alt='movie-poster'/>
-      </div>
-    </section>
+    <>
+      <Header />
+      <section className="section section_type_narrow movies">
+        <SearchForm
+          errMessage={props.errMessage}
+          handleSearch={props.handleSearch}
+          searchParametrs={props.searchParametrs}
+          setSearchParametrs={props.setSearchParametrs}
+          setErrMessage={props.setErrMessage}
+          api={movieApi.getMovies}
+        />
+        <MoviesCardList
+          movies={props.moviesArray}
+          isLoading={props.isLoading}
+          handleLike={props.handleLike}
+          savedMovies={false}
+        />
+      </section>
+      <Footer />
+    </>
   );
 }
 
-export default Movie;
+export default Movies;

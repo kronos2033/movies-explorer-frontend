@@ -20,7 +20,7 @@
 }
 
 .movie__duration {
-  margin-top: -5px;
+  margin-top: -1px;
   font-weight: normal;
   font-size: 11px;
   line-height: 13px;
@@ -52,17 +52,12 @@
 }
 
 .movie__image {
-  max-width: 220px;
-  max-height: 122px;
+  width: 220px;
+  height: 122px;
   padding: 6px;
+  object-fit: cover;
 }
 
-/* @media(max-width:520) {
-  .movie__image {
-    min-height: 168px;
-    object-fit: contain;
-  }
-} */
 @media (max-width: 520px) {
   .movie {
     flex-direction: column-reverse;
@@ -98,4 +93,12 @@
     object-fit: cover;
     padding: 0;
   }
+}
+.movie__trailer {
+  text-decoration: none;
+  color: black;
+}
+.movie__trailer:visited {
+  text-decoration: none;
+  color: black;
 }

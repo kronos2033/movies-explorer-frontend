@@ -1,17 +1,31 @@
-import './Movies.css';
-import SearchForm from '../SearchForm/SearchForm';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { allMovies } from '../../utils/constants';
+import Header from '../Header/Header';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import SearchForm from '../SearchForm/SearchForm';
+import './Movies.css';
+
 function Movies(props) {
-  const savedMovies = false;
+  console.log(props.moviesArray)
   return (
     <>
-      <Header />
-      <section className='section movies'>
-        <SearchForm />
-        <MoviesCardList movies={allMovies} savedMovies={savedMovies} />
+      <Header loggedIn={props.loggedIn} />
+      <section className="section section_type_narrow movies">
+        <SearchForm
+          errMessage={props.errMessage}
+          handleSearch={props.handleSearch}
+          searchParametrs={props.searchParametrs}
+          setSearchParametrs={props.setSearchParametrs}
+          setErrMessage={props.setErrMessage}
+        />
+
+        <MoviesCardList
+          preloader={props.preloader}
+          movies={props.moviesArray}
+          handleDeleteByLike={props.handleDeleteByLike}
+          handleDelete={props.handleDelete}
+          handleLike={props.handleLike}
+          savedMovies={false}
+        />
       </section>
       <Footer />
     </>

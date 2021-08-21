@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^12.8.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-email-validator": "^1.0.2",
+    "react-hook-form": "^7.12.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.4.3",
@@ -17,6 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "npm run build && scp -r ./build/*  mesto-login2@178.154.199.97:/home/mesto-login2/movie-explorer-front",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
