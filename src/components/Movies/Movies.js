@@ -5,6 +5,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
 
 function Movies(props) {
+  console.log(props.moviesArray)
   return (
     <>
       <Header loggedIn={props.loggedIn} />
