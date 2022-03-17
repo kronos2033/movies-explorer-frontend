@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false && react-scripts build",
     "deploy": "npm run build && scp -r ./build/*  mesto-login2@178.154.199.97:/home/mesto-login2/movie-explorer-front",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
