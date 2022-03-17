@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as mainApi from '../../utils/mainApi';
 import * as movieApi from '../../utils/movieApi';
@@ -201,8 +201,9 @@ function App() {
     <>
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
-        <ProtectedRoute
-            exact path="/"
+          <ProtectedRoute
+            exact
+            path="/"
             component={Movies}
             loggedIn={loggedIn}
             moviesArray={filteredMovieArray}
@@ -228,7 +229,7 @@ function App() {
             onUpdate={handleUpdateProfile}
             onLogout={handleLogout}
           />
-          
+
           <ProtectedRoute
             path="/saved-movies"
             component={SavedMovies}
